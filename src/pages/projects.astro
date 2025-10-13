@@ -17,7 +17,22 @@ const projects = projectsData.projects;
 			<div class={`project-card ${project.thumbnail ? 'with-thumbnail' : ''}`}>
 				{project.thumbnail && (
 					<div class="thumbnail-wrapper">
-						<img src={project.thumbnail} alt={`${project.title} 썸네일`} class="thumbnail" />
+						<img
+							src={project.thumbnail}
+							alt={`${project.title} 썸네일`}
+							class="thumbnail"
+							data-image={project.thumbnail}
+							data-title={project.title}
+						/>
+						<div class="thumbnail-caption">
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<circle cx="11" cy="11" r="8"></circle>
+								<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+								<line x1="11" y1="8" x2="11" y2="14"></line>
+								<line x1="8" y1="11" x2="14" y2="11"></line>
+							</svg>
+							<span>클릭하여 확대</span>
+						</div>
 					</div>
 				)}
 				<div class="project-content">
@@ -44,6 +59,14 @@ const projects = projectsData.projects;
 			</div>
 		))}
 	</section>
+
+	<!-- 이미지 오버레이 -->
+	<div id="imageOverlay" class="image-overlay">
+		<div class="overlay-content">
+			<button class="close-button" aria-label="닫기">&times;</button>
+			<img id="overlayImage" src="" alt="" />
+		</div>
+	</div>
 </Layout>
 
 <style>
@@ -89,6 +112,7 @@ const projects = projectsData.projects;
 	.thumbnail-wrapper {
 		flex-shrink: 0; /* 썸네일 크기 고정 */
 		width: 250px; /* 썸네일 너비 */
+		position: relative;
 	}
 
 	.thumbnail {
@@ -96,6 +120,32 @@ const projects = projectsData.projects;
 		height: auto;
 		border-radius: 4px;
 		object-fit: cover;
+		cursor: pointer;
+		transition: opacity 0.2s ease;
+	}
+
+	.thumbnail:hover {
+		opacity: 0.8;
+	}
+
+	.thumbnail-caption {
+		display: flex;
+		align-items: center;
+		gap: 0.3rem;
+		margin-top: 0.5rem;
+		font-size: 0.75rem;
+		color: #888;
+		justify-content: center;
+		cursor: pointer;
+		transition: color 0.2s ease;
+	}
+
+	.thumbnail-caption svg {
+		flex-shrink: 0;
+	}
+
+	.thumbnail-wrapper:hover .thumbnail-caption {
+		color: #007acc;
 	}
 
 	.project-content {
@@ -221,6 +271,71 @@ const projects = projectsData.projects;
 		color: #4169e1;
 	}
 
+	:global(html[data-theme="dark"]) .thumbnail-caption {
+		color: #a0a0a0;
+	}
+
+	:global(html[data-theme="dark"]) .thumbnail-wrapper:hover .thumbnail-caption {
+		color: #1e90ff;
+	}
+
+	/* 이미지 오버레이 스타일 */
+	.image-overlay {
+		display: none;
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.9);
+		z-index: 9999;
+		justify-content: center;
+		align-items: center;
+		opacity: 0;
+		transition: opacity 0.3s ease;
+	}
+
+	.image-overlay.active {
+		display: flex;
+		opacity: 1;
+	}
+
+	.overlay-content {
+		position: relative;
+		max-width: 90%;
+		max-height: 90%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	#overlayImage {
+		max-width: 100%;
+		max-height: 90vh;
+		object-fit: contain;
+		border-radius: 8px;
+	}
+
+	.close-button {
+		position: absolute;
+		top: -40px;
+		right: 0;
+		background: none;
+		border: none;
+		color: white;
+		font-size: 40px;
+		cursor: pointer;
+		line-height: 1;
+		padding: 0;
+		width: 40px;
+		height: 40px;
+		transition: transform 0.2s ease;
+	}
+
+	.close-button:hover {
+		transform: scale(1.2);
+	}
+
 	@media (max-width: 768px) {
 		.projects-header h1 {
 			font-size: 2rem;
@@ -240,5 +355,91 @@ const projects = projectsData.projects;
 			gap: 0.5rem;
 			align-items: flex-start;
 		}
+
+		.close-button {
+			top: -50px;
+			font-size: 50px;
+		}
+
+		#overlayImage {
+			max-height: 80vh;
+		}
 	}
 </style>
+
+<script>
+	// 썸네일 클릭 이벤트
+	document.addEventListener('DOMContentLoaded', () => {
+		const thumbnails = document.querySelectorAll('.thumbnail');
+		const captions = document.querySelectorAll('.thumbnail-caption');
+		const overlay = document.getElementById('imageOverlay');
+		const overlayImage = document.getElementById('overlayImage');
+		const closeButton = document.querySelector('.close-button');
+
+		// 오버레이 열기 함수
+		const openOverlay = (imageSrc: string, imageTitle: string) => {
+			overlayImage.src = imageSrc || '';
+			overlayImage.alt = imageTitle ? `${imageTitle} 썸네일` : '';
+
+			// 트랜지션을 위해 약간의 지연
+			overlay.style.display = 'flex';
+			setTimeout(() => {
+				overlay.classList.add('active');
+			}, 10);
+
+			// 스크롤 방지
+			document.body.style.overflow = 'hidden';
+		};
+
+		// 썸네일 클릭 시 오버레이 표시
+		thumbnails.forEach((thumbnail) => {
+			thumbnail.addEventListener('click', () => {
+				const imageSrc = thumbnail.getAttribute('data-image') || '';
+				const imageTitle = thumbnail.getAttribute('data-title') || '';
+				openOverlay(imageSrc, imageTitle);
+			});
+		});
+
+		// 캡션 클릭 시 오버레이 표시
+		captions.forEach((caption) => {
+			caption.addEventListener('click', () => {
+				// 부모 요소에서 썸네일 찾기
+				const thumbnail = caption.parentElement?.querySelector('.thumbnail');
+				if (thumbnail) {
+					const imageSrc = thumbnail.getAttribute('data-image') || '';
+					const imageTitle = thumbnail.getAttribute('data-title') || '';
+					openOverlay(imageSrc, imageTitle);
+				}
+			});
+		});
+
+		// 오버레이 닫기 함수
+		const closeOverlay = () => {
+			overlay.classList.remove('active');
+			setTimeout(() => {
+				overlay.style.display = 'none';
+				overlayImage.src = '';
+			}, 300); // 트랜지션 시간과 일치
+
+			// 스크롤 복원
+			document.body.style.overflow = '';
+		};
+
+		// 닫기 버튼 클릭
+		closeButton?.addEventListener('click', closeOverlay);
+
+		// 오버레이 배경 클릭
+		overlay?.addEventListener('click', (e) => {
+			if (e.target === overlay) {
+				closeOverlay();
+			}
+		});
+
+		// ESC 키로 닫기
+		document.addEventListener('keydown', (e) => {
+			if (e.key === 'Escape' && overlay?.classList.contains('active')) {
+				closeOverlay();
+			}
+		});
+	});
+</script>
