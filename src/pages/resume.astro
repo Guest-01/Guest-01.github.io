@@ -42,30 +42,32 @@ const { profile, skills, experience, education } = resumeData;
 
 		<section class="resume-section">
 			<h2>기술 스택</h2>
-			<div class="skill-category">
-				<h3>Frontend</h3>
-				<div class="skills">
-					{skills.frontend.map((skill) => (
-						<span class="skill">{skill}</span>
-					))}
+			<div class="skills-grid">
+				<div class="skill-category">
+					<h3>Frontend</h3>
+					<div class="skills">
+						{skills.frontend.map((skill) => (
+							<span class="skill">{skill}</span>
+						))}
+					</div>
 				</div>
-			</div>
-			
-			<div class="skill-category">
-				<h3>Backend</h3>
-				<div class="skills">
-					{skills.backend.map((skill) => (
-						<span class="skill">{skill}</span>
-					))}
+
+				<div class="skill-category">
+					<h3>Backend</h3>
+					<div class="skills">
+						{skills.backend.map((skill) => (
+							<span class="skill">{skill}</span>
+						))}
+					</div>
 				</div>
-			</div>
-			
-			<div class="skill-category">
-				<h3>DevOps & Tools</h3>
-				<div class="skills">
-					{skills.devopsAndTools.map((skill) => (
-						<span class="skill">{skill}</span>
-					))}
+
+				<div class="skill-category">
+					<h3>DevOps & Tools</h3>
+					<div class="skills">
+						{skills.devopsAndTools.map((skill) => (
+							<span class="skill">{skill}</span>
+						))}
+					</div>
 				</div>
 			</div>
 		</section>
@@ -210,8 +212,14 @@ const { profile, skills, experience, education } = resumeData;
 		color: #1e90ff;
 	}
 
+	.skills-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 2rem;
+	}
+
 	.skill-category {
-		margin-bottom: 2rem;
+		margin-bottom: 0;
 	}
 
 	.skill-category h3 {
@@ -223,8 +231,8 @@ const { profile, skills, experience, education } = resumeData;
 
 	.skills {
 		display: flex;
-		gap: 0.6rem;
-		flex-wrap: wrap;
+		flex-direction: column;
+		gap: 0.5rem;
 	}
 
 	.skill {
@@ -235,12 +243,7 @@ const { profile, skills, experience, education } = resumeData;
 	}
 
 	.skill::after {
-		content: '•';
-		margin-left: 0.6rem;
-		color: #ccc;
-	}
-
-	.skill:last-child::after {
+		content: '';
 		display: none;
 	}
 
@@ -408,6 +411,11 @@ const { profile, skills, experience, education } = resumeData;
 			font-size: 1.3rem;
 		}
 
+		.skills-grid {
+			grid-template-columns: 1fr;
+			gap: 1.5rem;
+		}
+
 		.experience-header,
 		.education-header {
 			flex-direction: column;
@@ -416,7 +424,9 @@ const { profile, skills, experience, education } = resumeData;
 		}
 
 		.skills {
-			gap: 0.5rem;
+			flex-direction: row;
+			flex-wrap: wrap;
+			gap: 0.6rem;
 		}
 
 		.skill {
@@ -424,7 +434,18 @@ const { profile, skills, experience, education } = resumeData;
 		}
 
 		.skill::after {
-			margin-left: 0.4rem;
+			content: '•';
+			display: inline;
+			margin-left: 0.6rem;
+			color: #ccc;
+		}
+
+		.skill:last-child::after {
+			display: none;
+		}
+
+		:global(html[data-theme="dark"]) .skill::after {
+			color: #666;
 		}
 	}
 </style>
