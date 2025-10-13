@@ -1,16 +1,31 @@
 {
   "projects": [
     {
+      "id": "devlog",
+      "title": "devlog - 미니멀한 개발 블로그 템플릿",
+      "description": "기존 블로그들이 레거시(Gatsby 등)를 사용하는 경우가 많아, Astro를 활용한 미니멀한 개발 블로그 템플릿을 만들었습니다. Claude Code의 도움을 받아 기본 CSS만을 활용하여 디자인하였습니다.",
+      "status": "완료",
+      "period": {
+        "start": "2025.07",
+        "end": "2025.10"
+      },
+      "technologies": ["Astro", "Github Pages", "Github Actions"],
+      "links": {
+        "github": "https://github.com/Guest-01/devlog-template",
+        "demo": "https://guest-01.github.io/devlog-template/"
+      }
+    },
+    {
       "id": "rim",
       "title": "Rim - 레드마인 기반 프로젝트 관리 도구",
       "thumbnail": "https://github.com/Guest-01/rim/raw/main/image.png",
-      "description": "Redmine Improved의 약자로, Next.js와 TypeScript로 개발되었으며 Prisma를 사용하여 PostgreSQL 데이터베이스와 효율적으로 상호작용합니다. TailwindCSS 기반의 DaisyUI를 활용하여 반응형 UI를 구현했습니다.",
-      "status": "진행중",
+      "description": "Redmine Improved의 약자로, Next.js와 TypeScript로 개발되었으며 Prisma를 사용하여 PostgreSQL 데이터베이스와 효율적으로 상호작용합니다. Vercel에 배포되어있으며, TailwindCSS 기반의 DaisyUI를 활용하여 반응형 UI를 구현했습니다.",
+      "status": "완료",
       "period": {
         "start": "2024.02",
-        "end": "현재"
+        "end": "2025.10"
       },
-      "technologies": ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
+      "technologies": ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Vercel"],
       "links": {
         "github": "https://github.com/Guest-01/rim",
         "demo": "https://rim-hh.vercel.app/"
