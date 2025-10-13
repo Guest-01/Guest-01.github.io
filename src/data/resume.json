@@ -1,0 +1,70 @@
+{
+  "profile": {
+    "description": [
+      "안녕하세요, 개발자 홍재훈입니다.",
+      "3년차 풀스택 개발자로서 사용자 중심의 웹 애플리케이션 개발에 집중하고 있습니다. 새로운 기술을 빠르게 습득하고 팀과 협업하며 문제를 해결하는 것을 좋아합니다."
+    ]
+  },
+  "skills": {
+    "frontend": [
+      "React",
+      "Vue.js", 
+      "TypeScript",
+      "Next.js",
+      "Tailwind CSS"
+    ],
+    "backend": [
+      "Node.js",
+      "Express",
+      "NestJS",
+      "PostgreSQL",
+      "MongoDB"
+    ],
+    "devopsAndTools": [
+      "Docker",
+      "AWS",
+      "Git",
+      "GitHub Actions",
+      "Vercel"
+    ]
+  },
+  "experience": [
+    {
+      "company": "스타트업 A",
+      "position": "프론트엔드 개발자",
+      "period": {
+        "start": "2022.03",
+        "end": "현재"
+      },
+      "achievements": [
+        "React 기반 관리자 대시보드 개발 및 유지보수",
+        "TypeScript 도입으로 코드 품질 향상 및 버그 30% 감소",
+        "웹 성능 최적화로 로딩 시간 40% 단축",
+        "반응형 웹 디자인 구현으로 모바일 사용자 경험 개선"
+      ]
+    },
+    {
+      "company": "프리랜서",
+      "position": "풀스택 개발자",
+      "period": {
+        "start": "2021.06",
+        "end": "2022.02"
+      },
+      "achievements": [
+        "중소기업 웹사이트 개발 및 유지보수 (5개 프로젝트)",
+        "WordPress 기반 사이트에서 React 기반 SPA로 마이그레이션",
+        "SEO 최적화로 검색 순위 상승"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "ABC 대학교",
+      "degree": "컴퓨터공학과 학사",
+      "period": {
+        "start": "2017.03",
+        "end": "2021.02"
+      }
+    }
+  ]
+}

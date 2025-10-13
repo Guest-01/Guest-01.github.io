@@ -1,0 +1,50 @@
+{
+  "projects": [
+    {
+      "id": "ecommerce-platform",
+      "title": "이커머스 플랫폼",
+      "thumbnail": "/thumbnail-ecommerce.png",
+      "description": "Next.js와 TypeScript를 활용한 풀스택 이커머스 플랫폼입니다. JWT 기반 사용자 인증, 관리자 대시보드, Stripe 결제 연동을 구현했으며, Prisma ORM을 통해 복잡한 데이터베이스 관계를 효율적으로 관리합니다. 서버 사이드 렌더링과 ISR을 활용하여 SEO 최적화와 빠른 페이지 로딩을 동시에 달성했습니다.",
+      "status": "진행중",
+      "period": {
+        "start": "2024.01",
+        "end": "현재"
+      },
+      "technologies": ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
+      "links": {
+        "github": "#",
+        "demo": "#"
+      }
+    },
+    {
+      "id": "realtime-chat-app",
+      "title": "실시간 채팅 애플리케이션",
+      "description": "Socket.io를 활용한 실시간 채팅 애플리케이션입니다. WebSocket 기반의 양방향 통신으로 그룹 채팅, 1:1 대화, 이미지/파일 공유를 지원하며, 읽음 확인과 타이핑 인디케이터 기능을 구현했습니다. MongoDB를 활용하여 채팅 히스토리를 효율적으로 저장하고, React Query로 무한 스크롤 메시지 로딩을 최적화했습니다.",
+      "status": "완료",
+      "period": {
+        "start": "2023.10",
+        "end": "2023.12"
+      },
+      "technologies": ["React", "Socket.io", "Node.js", "MongoDB"],
+      "links": {
+        "github": "#",
+        "demo": "#"
+      }
+    },
+    {
+      "id": "weather-dashboard",
+      "title": "날씨 대시보드",
+      "description": "OpenWeather API를 활용한 반응형 날씨 대시보드입니다. Geolocation API로 사용자 위치를 자동 감지하여 현재 날씨와 5일 예보를 제공하며, Chart.js를 통해 시간별 온도/습도 변화를 직관적인 그래프로 시각화합니다. Vue 3 Composition API와 Pinia 상태 관리를 활용하여 깔끔한 코드 구조를 유지했으며, 다크모드와 단위 변환(섭씨/화씨) 기능을 지원합니다.",
+      "status": "완료",
+      "period": {
+        "start": "2023.08",
+        "end": "2023.09"
+      },
+      "technologies": ["Vue.js", "Chart.js", "OpenWeather API"],
+      "links": {
+        "github": "#",
+        "demo": "#"
+      }
+    }
+  ]
+}

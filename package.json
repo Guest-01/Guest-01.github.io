@@ -1,0 +1,29 @@
+{
+  "name": "devlog-template",
+  "description": "A minimal Astro-based blog template with dark mode, comments, TOC, and GitHub Pages deployment",
+  "version": "1.0.0",
+  "type": "module",
+  "keywords": ["astro", "blog", "template", "dark-mode", "github-pages", "typescript", "giscus"],
+  "author": "Guest-01",
+  "license": "MIT",
+  "homepage": "https://guest-01.github.io/devlog-template/",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Guest-01/devlog-template.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "astro": "^5.12.0",
+    "typescript": "^5.9.2"
+  }
+}

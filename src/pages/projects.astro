@@ -1,0 +1,244 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+import projectsData from '../data/projects.json';
+
+const projects = projectsData.projects;
+---
+
+<Layout title={`프로젝트 - ${SITE.author.name}`}>
+	<section class="projects-header">
+		<h1>프로젝트</h1>
+		<p>개발한 프로젝트들을 소개합니다</p>
+	</section>
+	
+	<section class="projects-grid">
+		{projects.map((project) => (
+			<div class={`project-card ${project.thumbnail ? 'with-thumbnail' : ''}`}>
+				{project.thumbnail && (
+					<div class="thumbnail-wrapper">
+						<img src={project.thumbnail} alt={`${project.title} 썸네일`} class="thumbnail" />
+					</div>
+				)}
+				<div class="project-content">
+					<h2>{project.title}</h2>
+					<div class="project-meta">
+						<span class={`status ${project.status === '완료' ? 'completed' : ''}`}>
+							{project.status}
+						</span>
+						<span class="period">
+							{project.period.start} - {project.period.end}
+						</span>
+					</div>
+					<p>{project.description}</p>
+					<div class="tech-stack">
+						{project.technologies.map((tech) => (
+							<span class="tech">{tech}</span>
+						))}
+					</div>
+					<div class="project-links">
+						<a href={project.links.github} class="link">GitHub</a>
+						<a href={project.links.demo} class="link">Demo</a>
+					</div>
+				</div>
+			</div>
+		))}
+	</section>
+</Layout>
+
+<style>
+	.projects-header {
+		text-align: center;
+		padding: 1rem 0 1.5rem 0;
+		border-bottom: 1px solid #ccc;
+		margin-bottom: 1.5rem;
+	}
+
+	.projects-header h1 {
+		font-size: 2rem;
+		margin: 0 0 0.5rem 0;
+		color: #333;
+	}
+
+	.projects-header p {
+		font-size: 1rem;
+		color: #666;
+		margin: 0;
+	}
+
+	.projects-grid {
+		margin: 0;
+	}
+
+	.project-card {
+		background-color: #f9f9f9;
+		border-radius: 6px;
+		border: 1px solid #eee;
+		padding: 1.5rem;
+		margin-bottom: 1.5rem;
+		transition: transform 0.2s ease, box-shadow 0.2s ease;
+		display: flex; /* Flexbox 추가 */
+		gap: 1.5rem; /* 썸네일과 콘텐츠 사이 간격 */
+	}
+
+	.project-card.with-thumbnail:hover {
+		transform: translateY(-2px);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+	}
+
+	.thumbnail-wrapper {
+		flex-shrink: 0; /* 썸네일 크기 고정 */
+		width: 150px; /* 썸네일 너비 */
+	}
+
+	.thumbnail {
+		width: 100%;
+		height: auto;
+		border-radius: 4px;
+		object-fit: cover;
+	}
+
+	.project-content {
+		flex-grow: 1; /* 콘텐츠 영역이 남은 공간 모두 차지 */
+	}
+
+	.project-card h2 {
+		color: #333;
+		margin: 0 0 0.75rem 0;
+		font-size: 1.4rem;
+	}
+
+	.project-meta {
+		display: flex;
+		gap: 1rem;
+		margin-bottom: 0.75rem;
+		font-size: 0.9rem;
+		align-items: center;
+	}
+
+	.status {
+		padding: 0.2rem 0.6rem;
+		border-radius: 12px;
+		font-size: 0.8rem;
+		background-color: #ffa500;
+		color: white;
+	}
+
+	.status.completed {
+		background-color: #28a745;
+	}
+
+	.period {
+		color: #666;
+	}
+
+	.project-card p {
+		color: #555;
+		line-height: 1.6;
+		margin: 0 0 1rem 0;
+	}
+
+	.tech-stack {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+		margin-bottom: 1rem;
+	}
+
+	.tech {
+		background-color: #e0e0e0;
+		color: #555;
+		padding: 0.3rem 0.7rem;
+		border-radius: 12px;
+		font-size: 0.8rem;
+	}
+
+	.project-links {
+		display: flex;
+		gap: 1rem;
+	}
+
+	.link {
+		color: #007acc;
+		text-decoration: none;
+		font-weight: 500;
+		transition: color 0.3s ease;
+	}
+
+	.link:hover {
+		color: #005fa3;
+		text-decoration: underline;
+	}
+
+	/* 다크모드 스타일 */
+	:global(html[data-theme="dark"]) .projects-header {
+		border-bottom-color: #555;
+	}
+
+	:global(html[data-theme="dark"]) .projects-header h1 {
+		color: #f0f0f0;
+	}
+
+	:global(html[data-theme="dark"]) .projects-header p {
+		color: #a0a0a0;
+	}
+
+	:global(html[data-theme="dark"]) .project-card {
+		background-color: #3a3a3a;
+		border-color: #555;
+	}
+
+	:global(html[data-theme="dark"]) .project-card:hover {
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+	}
+
+	:global(html[data-theme="dark"]) .project-card h2 {
+		color: #f0f0f0;
+	}
+
+	:global(html[data-theme="dark"]) .project-card p {
+		color: #d0d0d0;
+	}
+
+	:global(html[data-theme="dark"]) .status {
+		color: white;
+	}
+
+	:global(html[data-theme="dark"]) .period {
+		color: #a0a0a0;
+	}
+
+	:global(html[data-theme="dark"]) .tech {
+		background-color: #555;
+		color: #d0d0d0;
+	}
+
+	:global(html[data-theme="dark"]) .link {
+		color: #1e90ff;
+	}
+
+	:global(html[data-theme="dark"]) .link:hover {
+		color: #4169e1;
+	}
+
+	@media (max-width: 768px) {
+		.projects-header h1 {
+			font-size: 2rem;
+		}
+
+		.project-card {
+			padding: 1.25rem;
+			flex-direction: column;
+		}
+
+		.thumbnail-wrapper {
+			width: 100%;
+		}
+
+		.project-meta {
+			flex-direction: column;
+			gap: 0.5rem;
+			align-items: flex-start;
+		}
+	}
+</style>

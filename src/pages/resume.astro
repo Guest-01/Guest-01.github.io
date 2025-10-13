@@ -1,0 +1,430 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { SITE } from '../config/site';
+import resumeData from '../data/resume.json';
+
+const { profile, skills, experience, education } = resumeData;
+---
+
+<Layout title={`이력서 - ${SITE.author.name}`}>
+	<section class="resume-header">
+		<h1>이력서</h1>
+		<p>개발자 {SITE.author.name}의 경력과 역량을 소개합니다</p>
+	</section>
+	
+	<section class="resume-content">
+		<section class="resume-section">
+			<h2>프로필</h2>
+			<div class="profile-content-wrapper">
+				{SITE.author.profile && (
+					<div class="profile-picture-wrapper">
+						<img src={SITE.author.profile} alt={`${SITE.author.name} 프로필 사진`} class="profile-picture" />
+					</div>
+				)}
+				<div class="profile-text-and-links">
+					{profile.description.map((paragraph) => (
+						<p>{paragraph}</p>
+					))}
+					<div class="social-links">
+						<a href={`mailto:${SITE.author.email}`} class="social-link" aria-label="Email">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+						</a>
+						<a href={SITE.author.github} class="social-link" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+						</a>
+						<a href={SITE.author.linkedin} class="social-link" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<section class="resume-section">
+			<h2>기술 스택</h2>
+			<div class="skill-category">
+				<h3>Frontend</h3>
+				<div class="skills">
+					{skills.frontend.map((skill) => (
+						<span class="skill">{skill}</span>
+					))}
+				</div>
+			</div>
+			
+			<div class="skill-category">
+				<h3>Backend</h3>
+				<div class="skills">
+					{skills.backend.map((skill) => (
+						<span class="skill">{skill}</span>
+					))}
+				</div>
+			</div>
+			
+			<div class="skill-category">
+				<h3>DevOps & Tools</h3>
+				<div class="skills">
+					{skills.devopsAndTools.map((skill) => (
+						<span class="skill">{skill}</span>
+					))}
+				</div>
+			</div>
+		</section>
+
+		<section class="resume-section">
+			<h2>경력</h2>
+			{experience.map((exp) => (
+				<div class="experience">
+					<div class="experience-header">
+						<h3>{exp.company}</h3>
+						<span class="period">{exp.period.start} - {exp.period.end}</span>
+					</div>
+					<div class="position">{exp.position}</div>
+					<ul class="achievements">
+						{exp.achievements.map((achievement) => (
+							<li>{achievement}</li>
+						))}
+					</ul>
+				</div>
+			))}
+		</section>
+
+		<section class="resume-section">
+			<h2>학력</h2>
+			{education.map((edu) => (
+				<div class="education">
+					<div class="education-header">
+						<h3>{edu.institution}</h3>
+						<span class="period">{edu.period.start} - {edu.period.end}</span>
+					</div>
+					<div class="degree">{edu.degree}</div>
+				</div>
+			))}
+		</section>
+	</section>
+</Layout>
+
+<style>
+	.resume-header {
+		text-align: center;
+		padding: 1rem 0 1.5rem 0;
+		border-bottom: 1px solid #ccc;
+		margin-bottom: 1.5rem;
+	}
+
+	.resume-header h1 {
+		font-size: 2rem;
+		margin: 0 0 0.5rem 0;
+		color: #333;
+	}
+
+	.resume-header p {
+		font-size: 1rem;
+		color: #666;
+		margin: 0;
+	}
+
+	.resume-content {
+		margin: 0;
+	}
+
+	.resume-section {
+		margin-bottom: 3rem;
+		padding: 0;
+	}
+
+	.profile-section {
+		/* display: flex; 제거 */
+		/* gap: 2rem; 제거 */
+		/* align-items: flex-start; 제거 */
+	}
+
+	.profile-content-wrapper {
+		display: flex;
+		gap: 2rem; /* 사진과 텍스트 사이 간격 */
+		align-items: flex-start; /* 상단 정렬 */
+		margin-top: 1.5rem; /* 부제목과의 간격 */
+	}
+
+	.profile-picture-wrapper {
+		flex-shrink: 0;
+		width: 120px;
+		height: 120px;
+	}
+
+	.profile-picture {
+		width: 100%;
+		height: 100%;
+		border-radius: 50%;
+		object-fit: cover;
+	}
+
+	.profile-text-and-links {
+		flex-grow: 1;
+	}
+
+	.resume-section h2 {
+		color: #333;
+		margin: 0 0 1.5rem 0;
+		font-size: 1.5rem;
+		font-weight: 600;
+		position: relative;
+		padding-bottom: 0.5rem;
+	}
+
+	.resume-section h2::after {
+		content: '';
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		width: 2rem;
+		height: 2px;
+		background-color: #007acc;
+	}
+
+	.resume-section p {
+		color: #555;
+		line-height: 1.7;
+		margin: 0.8rem 0;
+	}
+
+	.social-links {
+		display: flex;
+		gap: 1rem;
+		margin-top: 1.5rem;
+	}
+
+	.social-link {
+		color: #333;
+		transition: color 0.3s ease;
+	}
+
+	.social-link:hover {
+		color: #007acc;
+	}
+
+	:global(html[data-theme="dark"]) .social-link {
+		color: #e4e4e4;
+	}
+
+	:global(html[data-theme="dark"]) .social-link:hover {
+		color: #1e90ff;
+	}
+
+	.skill-category {
+		margin-bottom: 2rem;
+	}
+
+	.skill-category h3 {
+		color: #333;
+		margin: 0 0 1rem 0;
+		font-size: 1.1rem;
+		font-weight: 500;
+	}
+
+	.skills {
+		display: flex;
+		gap: 0.6rem;
+		flex-wrap: wrap;
+	}
+
+	.skill {
+		color: #007acc;
+		font-size: 0.9rem;
+		font-weight: 500;
+		position: relative;
+	}
+
+	.skill::after {
+		content: '•';
+		margin-left: 0.6rem;
+		color: #ccc;
+	}
+
+	.skill:last-child::after {
+		display: none;
+	}
+
+	.experience {
+		margin-bottom: 2rem;
+		position: relative;
+	}
+
+	.experience:last-child {
+		margin-bottom: 0;
+	}
+
+	.experience-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		margin-bottom: 0.5rem;
+	}
+
+	.experience-header h3 {
+		color: #333;
+		margin: 0;
+		font-size: 1.2rem;
+		font-weight: 600;
+	}
+
+	.period {
+		color: #888;
+		font-size: 0.9rem;
+		font-family: 'JetBrains Mono', 'Courier New', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+		font-variant-ligatures: none;
+	}
+
+	.position {
+		color: #007acc;
+		font-weight: 500;
+		margin-bottom: 0.6rem;
+		font-size: 1rem;
+	}
+
+	.achievements {
+		margin: 0;
+		padding-left: 0;
+		list-style: none;
+	}
+
+	.achievements li {
+		color: #555;
+		line-height: 1.5;
+		margin-bottom: 0.4rem;
+		position: relative;
+		padding-left: 1rem;
+	}
+
+	.achievements li::before {
+		content: '–';
+		position: absolute;
+		left: 0;
+		color: #007acc;
+		font-weight: 600;
+	}
+
+	.education {
+		margin-bottom: 1.5rem;
+	}
+
+	.education:last-child {
+		margin-bottom: 0;
+	}
+
+	.education-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: baseline;
+		margin-bottom: 0.5rem;
+	}
+
+	.education-header h3 {
+		color: #333;
+		margin: 0;
+		font-size: 1.2rem;
+		font-weight: 600;
+	}
+
+	.degree {
+		color: #666;
+		font-size: 1rem;
+	}
+
+	/* 다크모드 스타일 */
+	:global(html[data-theme="dark"]) .resume-header {
+		border-bottom-color: #555;
+	}
+
+	:global(html[data-theme="dark"]) .resume-header h1 {
+		color: #f0f0f0;
+	}
+
+	:global(html[data-theme="dark"]) .resume-header p {
+		color: #a0a0a0;
+	}
+
+	:global(html[data-theme="dark"]) .resume-section h2 {
+		color: #f0f0f0;
+	}
+
+	:global(html[data-theme="dark"]) .resume-section h2::after {
+		background-color: #1e90ff;
+	}
+
+	:global(html[data-theme="dark"]) .resume-section p {
+		color: #d0d0d0;
+	}
+
+	:global(html[data-theme="dark"]) .skill-category h3 {
+		color: #f0f0f0;
+	}
+
+	:global(html[data-theme="dark"]) .skill {
+		color: #1e90ff;
+	}
+
+	:global(html[data-theme="dark"]) .skill::after {
+		color: #666;
+	}
+
+	:global(html[data-theme="dark"]) .experience-header h3 {
+		color: #f0f0f0;
+	}
+
+	:global(html[data-theme="dark"]) .period {
+		color: #a0a0a0;
+	}
+
+	:global(html[data-theme="dark"]) .position {
+		color: #1e90ff;
+	}
+
+	:global(html[data-theme="dark"]) .achievements li {
+		color: #d0d0d0;
+	}
+
+	:global(html[data-theme="dark"]) .achievements li::before {
+		color: #1e90ff;
+	}
+
+	:global(html[data-theme="dark"]) .education-header h3 {
+		color: #f0f0f0;
+	}
+
+	:global(html[data-theme="dark"]) .degree {
+		color: #a0a0a0;
+	}
+
+	@media (max-width: 768px) {
+		.resume-header h1 {
+			font-size: 1.8rem;
+		}
+
+		.resume-section {
+			margin-bottom: 2.5rem;
+		}
+
+		.resume-section h2 {
+			font-size: 1.3rem;
+		}
+
+		.experience-header,
+		.education-header {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.25rem;
+		}
+
+		.skills {
+			gap: 0.5rem;
+		}
+
+		.skill {
+			font-size: 0.85rem;
+		}
+
+		.skill::after {
+			margin-left: 0.4rem;
+		}
+	}
+</style>

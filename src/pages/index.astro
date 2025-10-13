@@ -1,0 +1,164 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+
+const base = import.meta.env.BASE_URL;
+
+const posts = await getCollection('blog', ({ data }) => {
+	return !data.draft;
+});
+
+// 최신 순으로 정렬
+const sortedPosts = posts.sort((a, b) => 
+	new Date(b.data.publishDate).getTime() - new Date(a.data.publishDate).getTime()
+);
+
+function formatDate(date: Date): string {
+	return date.toLocaleDateString('ko-KR', {
+		year: 'numeric',
+		month: '2-digit',
+		day: '2-digit',
+	}).replace(/\. /g, '.').replace(/\.$/, '');
+}
+---
+
+<Layout>
+	
+	<section class="blog-posts">
+		<div class="post-list">
+			{sortedPosts.map((post) => (
+				<a href={`${base}blog/${post.slug}`} class="post-item">
+					<div class="post-content">
+						<h2 class="post-title">
+							{post.data.title}
+							{post.data.description && (
+								<span class="post-description">{post.data.description}</span>
+							)}
+						</h2>
+					</div>
+					<span class="post-date">{formatDate(post.data.publishDate)}</span>
+				</a>
+			))}
+		</div>
+	</section>
+</Layout>
+
+<style>
+	.blog-posts {
+		margin: 0;
+	}
+
+	.post-list {
+		padding: 0;
+	}
+
+	.post-item {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		padding: 1rem 0;
+		border-bottom: 1px solid #ccc;
+		transition: all 0.3s ease;
+		text-decoration: none;
+		color: inherit;
+		position: relative;
+	}
+
+	.post-item:last-child {
+		border-bottom: none;
+	}
+
+	.post-item:hover {
+		transform: translateX(8px);
+		cursor: pointer;
+	}
+
+	.post-item:hover .post-title {
+		color: #007acc;
+	}
+
+	.post-content {
+		flex: 1;
+		margin-right: 1rem;
+	}
+
+	.post-title {
+		color: #333;
+		margin: 0;
+		font-size: 1.1rem;
+		font-weight: 500;
+		text-align: left;
+		line-height: 1.4;
+	}
+
+	.post-description {
+		display: inline;
+		font-size: 0.9rem;
+		font-weight: 400;
+		color: #888;
+		margin-left: 0.3rem;
+	}
+
+	.post-date {
+		color: #666;
+		font-size: 0.9rem;
+		text-align: right;
+		flex-shrink: 0;
+		margin-left: 1rem;
+		font-family: 'JetBrains Mono', 'Courier New', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+		font-weight: 400;
+		width: 5.5rem;
+		font-variant-ligatures: none;
+	}
+
+	/* 다크모드 스타일 */
+	:global(html[data-theme="dark"]) .post-item {
+		border-bottom-color: #555;
+	}
+
+	:global(html[data-theme="dark"]) .post-item:hover .post-title {
+		color: #1e90ff;
+	}
+
+	:global(html[data-theme="dark"]) .post-title {
+		color: #f0f0f0;
+	}
+
+	:global(html[data-theme="dark"]) .post-description {
+		color: #a0a0a0;
+	}
+
+	:global(html[data-theme="dark"]) .post-date {
+		color: #a0a0a0;
+	}
+
+	@media (max-width: 768px) {
+		.post-item {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.5rem;
+		}
+
+		.post-content {
+			margin-right: 0;
+			width: 100%;
+		}
+
+		.post-title {
+			font-size: 1rem;
+		}
+
+		.post-description {
+			display: block;
+			margin-left: 0;
+			margin-top: 0.25rem;
+			font-size: 0.85rem;
+		}
+
+		.post-date {
+			margin-left: 0;
+			font-size: 0.85rem;
+			align-self: flex-end;
+		}
+	}
+</style>

@@ -1,0 +1,403 @@
+---
+import { getCollection } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import Comments from '../../components/Comments.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
+import { SITE } from '../../config/site.ts';
+
+const base = import.meta.env.BASE_URL;
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog', ({ data }) => {
+		return !data.draft;
+	});
+
+	return posts.map((post) => ({
+		params: { slug: post.slug },
+		props: { post },
+	}));
+}
+
+const { post } = Astro.props;
+const { Content, headings: rawHeadings } = await post.render();
+
+function formatDate(date: Date): string {
+	return date.toLocaleDateString('ko-KR', {
+		year: 'numeric',
+		month: '2-digit',
+		day: '2-digit',
+	}).replace(/\. /g, '.').replace(/\.$/, '');
+}
+
+// 헤딩 텍스트를 URL-safe ID로 변환
+function slugify(text: string): string {
+	return text
+		.toLowerCase()
+		.replace(/[^a-z0-9가-힣]+/g, '-')
+		.replace(/^-+|-+$/g, '');
+}
+
+// H1-H3 헤딩만 필터링하고 ID 추가
+const headings = rawHeadings
+	.filter(heading => heading.depth <= 3)
+	.map(heading => ({
+		id: slugify(heading.text),
+		text: heading.text,
+		level: heading.depth
+	}));
+---
+
+<Layout title={`${post.data.title} - ${SITE.author.name}`}>
+	<article class="blog-post">
+		<header class="post-header">
+			<h1>{post.data.title}</h1>
+			<div class="post-meta">
+				<time datetime={post.data.publishDate.toISOString()}>
+					{formatDate(post.data.publishDate)}
+				</time>
+				{post.data.tags && post.data.tags.length > 0 && (
+					<div class="tags">
+						{post.data.tags.map((tag) => (
+							<span class="tag">{tag}</span>
+						))}
+					</div>
+				)}
+			</div>
+			{post.data.description && (
+				<p class="post-description">{post.data.description}</p>
+			)}
+		</header>
+		
+		<div class="post-content">
+			<Content />
+		</div>
+		
+		<!-- 댓글 섹션 -->
+		<Comments />
+		
+		<footer class="post-footer">
+			<a href={base} class="back-link">← 블로그 목록으로 돌아가기</a>
+		</footer>
+		
+		<!-- TOC 플로팅 -->
+		<TableOfContents headings={headings} />
+	</article>
+</Layout>
+
+<!-- 헤딩에 ID 추가하는 스크립트 -->
+<script is:inline define:vars={{ headings }}>
+	// 페이지 로드 후 헤딩에 ID 추가
+	function addHeadingIds() {
+		const contentHeadings = document.querySelectorAll('.post-content h1, .post-content h2, .post-content h3');
+		
+		headings.forEach((heading, index) => {
+			if (contentHeadings[index]) {
+				contentHeadings[index].id = heading.id;
+			}
+		});
+	}
+
+	// DOM 로드 후 실행
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', addHeadingIds);
+	} else {
+		addHeadingIds();
+	}
+</script>
+
+<style>
+	.blog-post {
+		max-width: 100%;
+		margin: 0;
+		position: relative; /* TOC absolute positioning을 위한 기준점 */
+	}
+
+	.post-header {
+		margin-bottom: 2rem;
+		padding-bottom: 1rem;
+		border-bottom: 1px solid #ccc;
+	}
+
+	.post-header h1 {
+		font-size: 2.5rem;
+		margin: 0 0 1rem 0;
+		color: #333;
+		line-height: 1.2;
+	}
+
+	.post-meta {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1rem;
+		flex-wrap: wrap;
+	}
+
+	time {
+		color: #666;
+		font-size: 0.9rem;
+		font-family: 'JetBrains Mono', 'Courier New', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+		font-variant-ligatures: none;
+	}
+
+	.tags {
+		display: flex;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+
+	.tag {
+		background-color: #f0f0f0;
+		color: #666;
+		padding: 0.25rem 0.5rem;
+		border-radius: 12px;
+		font-size: 0.8rem;
+	}
+
+	.post-description {
+		font-size: 1.1rem;
+		color: #666;
+		margin: 0;
+		line-height: 1.5;
+	}
+
+	.post-content {
+		line-height: 1.7;
+		color: #333;
+	}
+
+	.post-content :global(h1),
+	.post-content :global(h2),
+	.post-content :global(h3),
+	.post-content :global(h4),
+	.post-content :global(h5),
+	.post-content :global(h6) {
+		margin: 2rem 0 1rem 0;
+		color: #333;
+		scroll-margin-top: 75px; /* 플로팅 앱바 높이만큼 오프셋 */
+	}
+
+	.post-content :global(h1) {
+		font-size: 2rem;
+		border-bottom: 2px solid #007acc;
+		padding-bottom: 0.5rem;
+	}
+
+	.post-content :global(h2) {
+		font-size: 1.6rem;
+	}
+
+	.post-content :global(h3) {
+		font-size: 1.3rem;
+	}
+
+	.post-content :global(p) {
+		margin: 1rem 0;
+	}
+
+	.post-content :global(a) {
+		color: #007acc;
+		text-decoration: underline;
+		transition: color 0.3s ease;
+	}
+
+	.post-content :global(a:hover) {
+		color: #005fa3;
+	}
+
+	.post-content :global(ul),
+	.post-content :global(ol) {
+		margin: 1rem 0;
+		padding-left: 1.5rem;
+	}
+
+	.post-content :global(li) {
+		margin: 0.5rem 0;
+	}
+
+	.post-content :global(blockquote) {
+		margin: 1.5rem 0;
+		padding: 1rem 1.5rem;
+		background-color: #f8f9fa;
+		border-left: 4px solid #007acc;
+		font-style: italic;
+	}
+
+	.post-content :global(code) {
+		background-color: #f1f3f4;
+		padding: 0.2rem 0.4rem;
+		border-radius: 3px;
+		font-family: 'JetBrains Mono', 'Courier New', Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+		font-size: 0.9em;
+		font-variant-ligatures: none;
+	}
+
+	.post-content :global(pre) {
+		background-color: #f8f9fa;
+		padding: 1rem;
+		border-radius: 6px;
+		overflow-x: auto;
+		margin: 1.5rem 0;
+	}
+
+	.post-content :global(pre code) {
+		background-color: transparent;
+		padding: 0;
+	}
+
+	.post-content :global(table) {
+		border-collapse: collapse;
+		width: 100%;
+		margin: 1.5rem 0;
+		border: 1px solid #ddd;
+	}
+
+	.post-content :global(th),
+	.post-content :global(td) {
+		border: 1px solid #ddd;
+		padding: 0.75rem;
+		text-align: left;
+	}
+
+	.post-content :global(th) {
+		background-color: #f5f5f5;
+		font-weight: 600;
+		color: #333;
+	}
+
+	.post-footer {
+		margin-top: 3rem;
+		padding-top: 2rem;
+		border-top: 1px solid #ccc;
+	}
+
+	.back-link {
+		color: #007acc;
+		text-decoration: none;
+		font-weight: 500;
+		transition: color 0.3s ease;
+	}
+
+	.back-link:hover {
+		color: #005fa3;
+		text-decoration: underline;
+	}
+
+	/* 다크모드 스타일 */
+	:global(html[data-theme="dark"]) .post-header {
+		border-bottom-color: #555;
+	}
+
+	:global(html[data-theme="dark"]) .post-header h1 {
+		color: #f0f0f0;
+	}
+
+	:global(html[data-theme="dark"]) time {
+		color: #a0a0a0;
+	}
+
+	:global(html[data-theme="dark"]) .tag {
+		background-color: #555;
+		color: #d0d0d0;
+	}
+
+	:global(html[data-theme="dark"]) .post-description {
+		color: #a0a0a0;
+	}
+
+	:global(html[data-theme="dark"]) .post-content {
+		color: #d0d0d0;
+	}
+
+	:global(html[data-theme="dark"]) .post-content :global(h1),
+	:global(html[data-theme="dark"]) .post-content :global(h2),
+	:global(html[data-theme="dark"]) .post-content :global(h3),
+	:global(html[data-theme="dark"]) .post-content :global(h4),
+	:global(html[data-theme="dark"]) .post-content :global(h5),
+	:global(html[data-theme="dark"]) .post-content :global(h6) {
+		color: #f0f0f0;
+	}
+
+	:global(html[data-theme="dark"]) .post-content :global(h1) {
+		border-bottom-color: #1e90ff;
+	}
+
+	:global(html[data-theme="dark"]) .post-content :global(a) {
+		color: #82c0ff; /* 밝은 하늘색으로 변경 */
+	}
+
+	:global(html[data-theme="dark"]) .post-content :global(a:hover) {
+		color: #a9d5ff; /* 호버 시 더 밝은 색으로 변경 */
+	}
+
+	:global(html[data-theme="dark"]) .post-content :global(blockquote) {
+		background-color: #3a3a3a;
+		border-left-color: #1e90ff;
+		color: #d0d0d0;
+	}
+
+	:global(html[data-theme="dark"]) .post-content :global(code) {
+		background-color: #3a3a3a;
+		color: #e4e4e4;
+	}
+
+	:global(html[data-theme="dark"]) .post-content :global(pre) {
+		background-color: #2d2d2d;
+	}
+
+	:global(html[data-theme="dark"]) .post-content :global(pre code) {
+		background-color: transparent;
+		color: #e4e4e4;
+	}
+
+	:global(html[data-theme="dark"]) .post-content :global(table) {
+		border-color: #555;
+	}
+
+	:global(html[data-theme="dark"]) .post-content :global(th),
+	:global(html[data-theme="dark"]) .post-content :global(td) {
+		border-color: #555;
+		color: #d0d0d0;
+	}
+
+	:global(html[data-theme="dark"]) .post-content :global(th) {
+		background-color: #3a3a3a;
+		color: #f0f0f0;
+	}
+
+	:global(html[data-theme="dark"]) .post-footer {
+		border-top-color: #555;
+	}
+
+	:global(html[data-theme="dark"]) .back-link {
+		color: #1e90ff;
+	}
+
+	:global(html[data-theme="dark"]) .back-link:hover {
+		color: #4169e1;
+	}
+
+	@media (max-width: 768px) {
+		.post-header h1 {
+			font-size: 2rem;
+		}
+
+		.post-meta {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.5rem;
+		}
+
+		.post-content :global(h1) {
+			font-size: 1.6rem;
+		}
+
+		.post-content :global(h2) {
+			font-size: 1.4rem;
+		}
+
+		.post-content :global(h3) {
+			font-size: 1.2rem;
+		}
+	}
+</style>

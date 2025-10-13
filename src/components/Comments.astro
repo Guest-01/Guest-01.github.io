@@ -1,0 +1,83 @@
+---
+import { SITE } from '../config/site';
+
+// giscus 스크립트에서 실제 script 태그가 있는지 확인
+const hasGiscusScript = SITE.comments?.giscusScript && 
+                       SITE.comments.giscusScript.trim() !== '' &&
+                       SITE.comments.giscusScript.includes('<script src="https://giscus.app/client.js"');
+
+const isCommentsEnabled = hasGiscusScript;
+---
+
+{isCommentsEnabled && (
+  <section class="comments-section">
+    <h3 class="comments-title">댓글</h3>
+    <div class="comments-container" set:html={SITE.comments.giscusScript} />
+  </section>
+)}
+
+{isCommentsEnabled && (
+  <script>
+    // giscus 로드 후 초기 테마 설정
+    function initGiscusTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      
+      // giscus iframe이 로드될 때까지 기다린 후 테마 설정
+      const checkGiscusFrame = setInterval(() => {
+        const giscusFrame = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
+        if (giscusFrame && giscusFrame.contentWindow) {
+          clearInterval(checkGiscusFrame);
+          
+          // 잠시 후 테마 설정 (iframe이 완전히 로드된 후)
+          setTimeout(() => {
+            giscusFrame.contentWindow?.postMessage({
+              giscus: {
+                setConfig: {
+                  theme: currentTheme === 'dark' ? 'dark' : 'light'
+                }
+              }
+            }, 'https://giscus.app');
+          }, 1000);
+        }
+      }, 100);
+      
+      // 10초 후 정리 (무한 루프 방지)
+      setTimeout(() => clearInterval(checkGiscusFrame), 10000);
+    }
+    
+    // DOM 로드 후 실행
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initGiscusTheme);
+    } else {
+      initGiscusTheme();
+    }
+  </script>
+)}
+
+<style>
+  .comments-section {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #ccc;
+  }
+  
+  .comments-title {
+    margin-bottom: 1.5rem;
+    color: #333;
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .comments-container {
+    width: 100%;
+  }
+  
+  /* 다크모드 스타일 */
+  :global(html[data-theme="dark"]) .comments-section {
+    border-top-color: #555;
+  }
+  
+  :global(html[data-theme="dark"]) .comments-title {
+    color: #f0f0f0;
+  }
+</style>
