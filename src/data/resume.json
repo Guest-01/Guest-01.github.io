@@ -1,69 +1,72 @@
 {
   "profile": {
     "description": [
-      "안녕하세요, 개발자 홍재훈입니다.",
-      "3년차 풀스택 개발자로서 사용자 중심의 웹 애플리케이션 개발에 집중하고 있습니다. 새로운 기술을 빠르게 습득하고 팀과 협업하며 문제를 해결하는 것을 좋아합니다."
+      "안녕하세요, 이것저것 다 하는 개발자 장호현입니다.",
+      "4년차 프론트엔드 개발자로, 도구와 기술을 가리지 않고 최적의 솔루션을 찾는 것을 즐깁니다. 유지보수가 가능한 코드 작성과 협업을 중요시하며, AI에게 모든 것을 맡기기보다는 설계에 개입하는 것을 좋아합니다. 불편한 부분을 찾아 개선하는 데에 열정이 있지만, 동시에 오버엔지니어링을 경계합니다."
     ]
   },
   "skills": {
     "frontend": [
+      "Vue.js",
       "React",
-      "Vue.js", 
-      "TypeScript",
-      "Next.js",
-      "Tailwind CSS"
+      "TypeScript"
     ],
     "backend": [
       "Node.js",
       "Express",
-      "NestJS",
-      "PostgreSQL",
-      "MongoDB"
+      "Go",
+      "PostgreSQL"
     ],
     "devopsAndTools": [
       "Docker",
-      "AWS",
-      "Git",
-      "GitHub Actions",
-      "Vercel"
+      "Github Actions",
+      "NAVER Cloud Platform"
     ]
   },
   "experience": [
     {
-      "company": "스타트업 A",
-      "position": "프론트엔드 개발자",
+      "company": "엔큐리티플랫폼",
+      "position": "프론트엔드 개발",
       "period": {
-        "start": "2022.03",
+        "start": "2022.02",
         "end": "현재"
       },
       "achievements": [
-        "React 기반 관리자 대시보드 개발 및 유지보수",
-        "TypeScript 도입으로 코드 품질 향상 및 버그 30% 감소",
-        "웹 성능 최적화로 로딩 시간 40% 단축",
-        "반응형 웹 디자인 구현으로 모바일 사용자 경험 개선"
+        "AI First: 선발대로 AI 도입 프로젝트 진행 (Claude Code)",
+        "Electron 기반 크로스 플랫폼 데스크톱 앱 개발 (VPN 클라이언트)",
+        "Vue2 EOL에 따른 Vue3로 마이그레이션",
+        "가시성 높은 대시보드 UI 개발 및 개편 (Charts.js)",
+        "솔루션의 보안 적합성 및 인증 심사 대응 (CSAP, 보안기능 확인서)"
       ]
     },
     {
-      "company": "프리랜서",
-      "position": "풀스택 개발자",
+      "company": "㈜가비아",
+      "position": "고객지원",
       "period": {
-        "start": "2021.06",
-        "end": "2022.02"
+        "start": "2018.10",
+        "end": "2021.05"
       },
       "achievements": [
-        "중소기업 웹사이트 개발 및 유지보수 (5개 프로젝트)",
-        "WordPress 기반 사이트에서 React 기반 SPA로 마이그레이션",
-        "SEO 최적화로 검색 순위 상승"
+        "문자(SMS) API 연동 매뉴얼 작성",
+        "이메일 다중 검색 시스템 개발(Python, PyQT)"
       ]
     }
   ],
   "education": [
     {
-      "institution": "ABC 대학교",
-      "degree": "컴퓨터공학과 학사",
+      "institution": "코드스테이츠 AI 부트캠프",
+      "degree": "3기 수료",
       "period": {
-        "start": "2017.03",
-        "end": "2021.02"
+        "start": "2021.05",
+        "end": "2021.11"
+      }
+    },
+    {
+      "institution": "중앙대학교 (서울)",
+      "degree": "심리학과 학사",
+      "period": {
+        "start": "2012.03",
+        "end": "2019.02"
       }
     }
   ]

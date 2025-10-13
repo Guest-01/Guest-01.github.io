@@ -1,13 +1,13 @@
 export const SITE = {
-  name: 'TIL', // 사이트 이름 (네비게이션 로고)
-  title: 'TIL - Today I Learned', // 기본 페이지 제목 (브라우저 탭)
+  name: 'HH. Jang', // 사이트 이름 (네비게이션 로고)
+  title: 'HH. Jang - Developer Blog', // 기본 페이지 제목 (브라우저 탭)
   description: 'A personal blog for sharing what I learn.', // SEO를 위한 기본 사이트 설명
   author: {
-    name: '홍재훈', // 작성자 이름
-    profile: '/profile-picture.png', // 프로필 사진 경로 (선택 사항)
-    email: 'your-email@example.com', // 이메일 주소
-    github: 'https://github.com/your-username', // GitHub 프로필 URL
-    linkedin: 'https://linkedin.com/in/your-username', // LinkedIn 프로필 URL
+    name: '장호현', // 작성자 이름
+    profile: 'https://avatars.githubusercontent.com/u/49602144?v=4', // 프로필 사진 경로 (선택 사항)
+    email: 'cloudonly21@gmail.com', // 이메일 주소
+    github: 'https://github.com/Guest-01', // GitHub 프로필 URL
+    // linkedin: '', // LinkedIn 프로필 URL
   },
   
   // giscus 댓글 시스템 설정
@@ -17,13 +17,13 @@ export const SITE = {
     giscusScript: `
       <!-- giscus.app에서 생성된 스크립트를 여기에 붙여넣으세요 -->
       <script src="https://giscus.app/client.js"
-        data-repo="Guest-01/devlog-template"
-        data-repo-id="R_kgDOPXxtWQ"
+        data-repo="Guest-01/Guest-01.github.io"
+        data-repo-id="R_kgDOQBRo6w"
         data-category="Announcements"
-        data-category-id="DIC_kwDOPXxtWc4CuJlk"
+        data-category-id="DIC_kwDOQBRo684Cwkrj"
         data-mapping="pathname"
         data-strict="0"
-        data-reactions-enabled="0"
+        data-reactions-enabled="1"
         data-emit-metadata="0"
         data-input-position="bottom"
         data-theme="light"

@@ -1,49 +1,51 @@
 {
   "projects": [
     {
-      "id": "ecommerce-platform",
-      "title": "이커머스 플랫폼",
-      "thumbnail": "/thumbnail-ecommerce.png",
-      "description": "Next.js와 TypeScript를 활용한 풀스택 이커머스 플랫폼입니다. JWT 기반 사용자 인증, 관리자 대시보드, Stripe 결제 연동을 구현했으며, Prisma ORM을 통해 복잡한 데이터베이스 관계를 효율적으로 관리합니다. 서버 사이드 렌더링과 ISR을 활용하여 SEO 최적화와 빠른 페이지 로딩을 동시에 달성했습니다.",
+      "id": "rim",
+      "title": "Rim - 레드마인 기반 프로젝트 관리 도구",
+      "thumbnail": "https://github.com/Guest-01/rim/raw/main/image.png",
+      "description": "Redmine Improved의 약자로, Next.js와 TypeScript로 개발되었으며 Prisma를 사용하여 PostgreSQL 데이터베이스와 효율적으로 상호작용합니다. TailwindCSS 기반의 DaisyUI를 활용하여 반응형 UI를 구현했습니다.",
       "status": "진행중",
       "period": {
-        "start": "2024.01",
+        "start": "2024.02",
         "end": "현재"
       },
       "technologies": ["Next.js", "TypeScript", "Prisma", "PostgreSQL"],
       "links": {
-        "github": "#",
-        "demo": "#"
+        "github": "https://github.com/Guest-01/rim",
+        "demo": "https://rim-hh.vercel.app/"
       }
     },
     {
-      "id": "realtime-chat-app",
-      "title": "실시간 채팅 애플리케이션",
-      "description": "Socket.io를 활용한 실시간 채팅 애플리케이션입니다. WebSocket 기반의 양방향 통신으로 그룹 채팅, 1:1 대화, 이미지/파일 공유를 지원하며, 읽음 확인과 타이핑 인디케이터 기능을 구현했습니다. MongoDB를 활용하여 채팅 히스토리를 효율적으로 저장하고, React Query로 무한 스크롤 메시지 로딩을 최적화했습니다.",
+      "id": "homeflix-v2",
+      "title": "Homeflix - 개인 넷플릭스 클론",
+      "thumbnail": "https://private-user-images.githubusercontent.com/49602144/297797151-5908b817-1570-46fb-9a35-30a918073dd1.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjAzMzAzOTcsIm5iZiI6MTc2MDMzMDA5NywicGF0aCI6Ii80OTYwMjE0NC8yOTc3OTcxNTEtNTkwOGI4MTctMTU3MC00NmZiLTlhMzUtMzBhOTE4MDczZGQxLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTEwMTMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUxMDEzVDA0MzQ1N1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTc0YWMxMjhjMjIzYTczZDU2OTI0NzJmZmNlNWQ2YjY3YTU5OGYzYzI2NzJhZjlkNDlmZDYzOWZiZTRhYjlmNDEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.th8UejNrcLPw5Jf3aYZyjdw_I9cfFkE91P-YOktBPX4",
+      "description": "Pocketbase를 백엔드로 사용하여 인증, 데이터 저장, 파일 관리를 처리하는 개인 넷플릭스 클론입니다. Vue 3와 Vuetify를 활용하여 머티리얼 디자인 기반의 UI를 구현했습니다.",
       "status": "완료",
       "period": {
-        "start": "2023.10",
-        "end": "2023.12"
+        "start": "2023.06",
+        "end": "2024.10"
       },
-      "technologies": ["React", "Socket.io", "Node.js", "MongoDB"],
+      "technologies": ["Vue.js", "Vuetify", "TypeScript", "Pocketbase"],
       "links": {
-        "github": "#",
-        "demo": "#"
+        "github": "https://github.com/Guest-01/homeflix-v2",
+        "demo": "https://homeflix-v2.pockethost.io/"
       }
     },
     {
-      "id": "weather-dashboard",
-      "title": "날씨 대시보드",
-      "description": "OpenWeather API를 활용한 반응형 날씨 대시보드입니다. Geolocation API로 사용자 위치를 자동 감지하여 현재 날씨와 5일 예보를 제공하며, Chart.js를 통해 시간별 온도/습도 변화를 직관적인 그래프로 시각화합니다. Vue 3 Composition API와 Pinia 상태 관리를 활용하여 깔끔한 코드 구조를 유지했으며, 다크모드와 단위 변환(섭씨/화씨) 기능을 지원합니다.",
+      "id": "trybit",
+      "title": "TryBit - 가상 화폐 모의 투자 플랫폼",
+      "thumbnail": "https://github.com/Guest-01/trybit/raw/master/loginAnimation.gif",
+      "description": "업비트 거래소의 공개 API를 사용하여 실시간 시세를 제공하고, Firebase를 백엔드로 활용하여 사용자 인증과 데이터 저장을 처리하는 가상 화폐 모의 투자 플랫폼입니다. Vue 3와 TailwindCSS를 사용하여 반응형 UI를 구현했습니다.",
       "status": "완료",
       "period": {
-        "start": "2023.08",
-        "end": "2023.09"
+        "start": "2021.12",
+        "end": "2024.12"
       },
-      "technologies": ["Vue.js", "Chart.js", "OpenWeather API"],
+      "technologies": ["Vue.js", "TailwindCSS", "Firebase"],
       "links": {
-        "github": "#",
-        "demo": "#"
+        "github": "https://github.com/Guest-01/trybit",
+        "demo": "https://trybit-73d01.web.app/"
       }
     }
   ]
