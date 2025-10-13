@@ -3,7 +3,7 @@
     {
       "id": "devlog",
       "title": "devlog - 미니멀한 개발 블로그 템플릿",
-      "description": "기존 블로그들이 레거시(Gatsby 등)를 사용하는 경우가 많아, Astro를 활용한 미니멀한 개발 블로그 템플릿을 만들었습니다. Claude Code의 도움을 받아 기본 CSS만을 활용하여 디자인하였습니다.",
+      "description": "기존 블로그 템플릿들이 다소 무겁고 레거시가 많아, 개인 프로젝트나 학습 내용을 간단히 기록할 수 있는 미니멀한 블로그 템플릿을 Astro로 제작했습니다. GitHub Pages에 배포할 수 있으며, GitHub Actions를 통해 자동으로 빌드 및 배포됩니다.",
       "status": "완료",
       "period": {
         "start": "2025.07",
@@ -19,7 +19,7 @@
       "id": "rim",
       "title": "Rim - 레드마인 기반 프로젝트 관리 도구",
       "thumbnail": "https://github.com/Guest-01/rim/raw/main/image.png",
-      "description": "Redmine Improved의 약자로, Next.js와 TypeScript로 개발되었으며 Prisma를 사용하여 PostgreSQL 데이터베이스와 효율적으로 상호작용합니다. Vercel에 배포되어있으며, TailwindCSS 기반의 DaisyUI를 활용하여 반응형 UI를 구현했습니다.",
+      "description": "Redmin Improved의 약자로, Jira나 Confluence와 같은 상용 도구의 복잡성을 피하면서도 Redmine의 기본 기능을 확장하여 보다 직관적이고 현대적인 UI/UX를 제공하는 프로젝트 관리 도구입니다. Next.js와 Prisma를 사용하여 개발되었으며, Vercel을 통해 배포되어 있습니다.",
       "status": "완료",
       "period": {
         "start": "2024.02",
@@ -35,7 +35,7 @@
       "id": "homeflix-v2",
       "title": "Homeflix - 개인 넷플릭스 클론",
       "thumbnail": "https://private-user-images.githubusercontent.com/49602144/297797151-5908b817-1570-46fb-9a35-30a918073dd1.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjAzMzAzOTcsIm5iZiI6MTc2MDMzMDA5NywicGF0aCI6Ii80OTYwMjE0NC8yOTc3OTcxNTEtNTkwOGI4MTctMTU3MC00NmZiLTlhMzUtMzBhOTE4MDczZGQxLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTEwMTMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUxMDEzVDA0MzQ1N1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTc0YWMxMjhjMjIzYTczZDU2OTI0NzJmZmNlNWQ2YjY3YTU5OGYzYzI2NzJhZjlkNDlmZDYzOWZiZTRhYjlmNDEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.th8UejNrcLPw5Jf3aYZyjdw_I9cfFkE91P-YOktBPX4",
-      "description": "Pocketbase를 백엔드로 사용하여 인증, 데이터 저장, 파일 관리를 처리하는 개인 넷플릭스 클론입니다. Vue 3와 Vuetify를 활용하여 머티리얼 디자인 기반의 UI를 구현했습니다.",
+      "description": "간단하게 개인용 미디어 서버를 구축하고 관리할 수 있는 넷플릭스 클론 프로젝트입니다. Vue 3와 Vuetify를 사용하여 머티리얼 디자인 기반의 반응형 UI를 구현했으며, Pocketbase를 백엔드로 활용하여 사용자 인증과 데이터 저장을 처리합니다.",
       "status": "완료",
       "period": {
         "start": "2023.06",
@@ -51,7 +51,7 @@
       "id": "trybit",
       "title": "TryBit - 가상 화폐 모의 투자 플랫폼",
       "thumbnail": "https://github.com/Guest-01/trybit/raw/master/loginAnimation.gif",
-      "description": "업비트 거래소의 공개 API를 사용하여 실시간 시세를 제공하고, Firebase를 백엔드로 활용하여 사용자 인증과 데이터 저장을 처리하는 가상 화폐 모의 투자 플랫폼입니다. Vue 3와 TailwindCSS를 사용하여 반응형 UI를 구현했습니다.",
+      "description": "주식에 비해 가상화폐는 모의 투자 플랫폼이 부족하다는 점에 착안하여, 업비트 거래소의 실시간 시세 API를 활용한 가상 화폐 모의 투자 플랫폼을 개발했습니다. Vue.js와 TailwindCSS로 프론트엔드를 구축하고, Firebase를 백엔드로 사용하여 사용자 인증과 데이터 관리를 처리합니다.",
       "status": "완료",
       "period": {
         "start": "2021.12",

@@ -1,6 +1,6 @@
 export const SITE = {
   name: 'HH. Jang', // 사이트 이름 (네비게이션 로고)
-  title: 'HH. Jang - Developer Blog', // 기본 페이지 제목 (브라우저 탭)
+  title: 'HH. Jang - Dev Blog', // 기본 페이지 제목 (브라우저 탭)
   description: 'A personal blog for sharing what I learn.', // SEO를 위한 기본 사이트 설명
   author: {
     name: '장호현', // 작성자 이름
