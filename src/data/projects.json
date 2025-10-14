@@ -34,7 +34,7 @@
     {
       "id": "homeflix-v2",
       "title": "Homeflix - 개인 넷플릭스 클론",
-      "thumbnail": "https://private-user-images.githubusercontent.com/49602144/297797151-5908b817-1570-46fb-9a35-30a918073dd1.png?jwt=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJnaXRodWIuY29tIiwiYXVkIjoicmF3LmdpdGh1YnVzZXJjb250ZW50LmNvbSIsImtleSI6ImtleTUiLCJleHAiOjE3NjAzMzAzOTcsIm5iZiI6MTc2MDMzMDA5NywicGF0aCI6Ii80OTYwMjE0NC8yOTc3OTcxNTEtNTkwOGI4MTctMTU3MC00NmZiLTlhMzUtMzBhOTE4MDczZGQxLnBuZz9YLUFtei1BbGdvcml0aG09QVdTNC1ITUFDLVNIQTI1NiZYLUFtei1DcmVkZW50aWFsPUFLSUFWQ09EWUxTQTUzUFFLNFpBJTJGMjAyNTEwMTMlMkZ1cy1lYXN0LTElMkZzMyUyRmF3czRfcmVxdWVzdCZYLUFtei1EYXRlPTIwMjUxMDEzVDA0MzQ1N1omWC1BbXotRXhwaXJlcz0zMDAmWC1BbXotU2lnbmF0dXJlPTc0YWMxMjhjMjIzYTczZDU2OTI0NzJmZmNlNWQ2YjY3YTU5OGYzYzI2NzJhZjlkNDlmZDYzOWZiZTRhYjlmNDEmWC1BbXotU2lnbmVkSGVhZGVycz1ob3N0In0.th8UejNrcLPw5Jf3aYZyjdw_I9cfFkE91P-YOktBPX4",
+      "thumbnail": "/homeflix-v2.png",
       "description": "간단하게 개인용 미디어 서버를 구축하고 관리할 수 있는 넷플릭스 클론 프로젝트입니다. Vue 3와 Vuetify를 사용하여 머티리얼 디자인 기반의 반응형 UI를 구현했으며, Pocketbase를 백엔드로 활용하여 사용자 인증과 데이터 저장을 처리합니다.",
       "status": "완료",
       "period": {

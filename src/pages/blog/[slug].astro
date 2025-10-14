@@ -245,6 +245,16 @@ const headings = rawHeadings
 		padding: 0;
 	}
 
+	.post-content :global(img) {
+		max-width: 100%;
+		height: auto;
+		display: block;
+		margin: 1.5rem auto;
+		border-radius: 8px;
+		border: 1px solid #ccc;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+	}
+
 	.post-content :global(table) {
 		border-collapse: collapse;
 		width: 100%;
@@ -348,6 +358,11 @@ const headings = rawHeadings
 	:global(html[data-theme="dark"]) .post-content :global(pre code) {
 		background-color: transparent;
 		color: #e4e4e4;
+	}
+
+	:global(html[data-theme="dark"]) .post-content :global(img) {
+		border-color: #444;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 	}
 
 	:global(html[data-theme="dark"]) .post-content :global(table) {

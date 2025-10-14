@@ -29,12 +29,10 @@ function formatDate(date: Date): string {
 			{sortedPosts.map((post) => (
 				<a href={`${base}blog/${post.slug}`} class="post-item">
 					<div class="post-content">
-						<h2 class="post-title">
-							{post.data.title}
-							{post.data.description && (
-								<span class="post-description">{post.data.description}</span>
-							)}
-						</h2>
+						<h2 class="post-title">{post.data.title}</h2>
+						{post.data.description && (
+							<p class="post-description">{post.data.description}</p>
+						)}
 					</div>
 					<span class="post-date">{formatDate(post.data.publishDate)}</span>
 				</a>
@@ -87,16 +85,21 @@ function formatDate(date: Date): string {
 		margin: 0;
 		font-size: 1.1rem;
 		font-weight: 500;
-		text-align: left;
 		line-height: 1.4;
 	}
 
 	.post-description {
-		display: inline;
+		margin: 0.25rem 0 0 0;
 		font-size: 0.9rem;
 		font-weight: 400;
 		color: #888;
-		margin-left: 0.3rem;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.post-item:hover .post-description {
+		white-space: normal;
 	}
 
 	.post-date {
@@ -149,8 +152,6 @@ function formatDate(date: Date): string {
 		}
 
 		.post-description {
-			display: block;
-			margin-left: 0;
 			margin-top: 0.25rem;
 			font-size: 0.85rem;
 		}
