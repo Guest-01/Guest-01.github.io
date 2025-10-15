@@ -13,8 +13,7 @@
       "TypeScript"
     ],
     "backend": [
-      "Node.js / Express",
-      "Go / Fiber"
+      "Node.js / Express"
     ],
     "devopsAndTools": [
       "Docker",
