@@ -33,9 +33,11 @@
       "achievements": [
         "AI First: 사내 선발대로 AI 도입 프로젝트 진행 (Claude Code)",
         "Electron 기반 크로스 플랫폼 데스크톱 앱 개발 (VPN 클라이언트)",
+        "외부 인증 시스템 연동 및 Mock 서버 개발 (SSO, OAuth2.0, Radius)",
         "Zero Trust 기반 엔드포인트 정책 검증 기능 개발",
         "Vue2 EOL에 따른 Vue3로 마이그레이션",
         "가시성 높은 대시보드 UI 개발 및 개편 (Charts.js)",
+        "대량의 테이블 데이터 처리 및 최적화 (Ag-Grid, Tanstack/Table)",
         "솔루션의 보안 적합성 및 인증 심사 대응 (CSAP, 보안기능 확인서)"
       ]
     },
