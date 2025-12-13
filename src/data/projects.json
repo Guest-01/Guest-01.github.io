@@ -1,10 +1,25 @@
 {
   "projects": [
     {
+      "id": "liar-game-web",
+      "title": "Liar Game Web - 온라인 라이어 게임",
+      "thumbnail": "https://github.com/Guest-01/liar-game-web/blob/main/main-page.png?raw=true",
+      "description": "온라인으로 라이어 게임을 즐길 수 있는 웹 애플리케이션입니다. 심리게임 특성상 별다른 캐릭터나 그래픽 요소가 필요 없기에 단순 실시간 통신만 가능하면 일반 웹 기술로도 충분하다고 판단하여, Express.js와 Socket.IO를 사용해 서버를 구축하고, 프론트엔드는 EJS 템플릿 + Alpine.js로 제작했습니다. 클라우드 서버에 직접 배포하여 도메인까지 연결한 프로젝트입니다.",
+      "period": {
+        "start": "2025.11",
+        "end": "2025.12"
+      },
+      "technologies": ["Express", "SocketIO"],
+      "links": {
+        "github": "https://github.com/Guest-01/liar-game-web",
+        "demo": "https://liar-game.guest-01.dev/"
+      }
+    },
+    {
       "id": "devlog",
       "title": "devlog - 미니멀한 개발 블로그 템플릿",
+      "thumbnail": "/devlog-template.png",
       "description": "기존 블로그 템플릿들이 다소 무겁고 레거시가 많아, 개인 프로젝트나 학습 내용을 간단히 기록할 수 있는 미니멀한 블로그 템플릿을 Astro로 제작했습니다. GitHub Pages에 배포할 수 있으며, GitHub Actions를 통해 자동으로 빌드 및 배포됩니다.",
-      "status": "완료",
       "period": {
         "start": "2025.07",
         "end": "2025.10"
@@ -20,7 +35,6 @@
       "title": "Rim - 레드마인 기반 프로젝트 관리 도구",
       "thumbnail": "https://github.com/Guest-01/rim/raw/main/image.png",
       "description": "Redmin Improved의 약자로, Jira나 Confluence와 같은 상용 도구의 복잡성을 피하면서도 Redmine의 기본 기능을 확장하여 보다 직관적이고 현대적인 UI/UX를 제공하는 프로젝트 관리 도구입니다. Next.js와 Prisma를 사용하여 개발되었으며, Vercel을 통해 배포되어 있습니다.",
-      "status": "완료",
       "period": {
         "start": "2024.02",
         "end": "2025.10"
@@ -36,7 +50,6 @@
       "title": "Homeflix - 개인 넷플릭스 클론",
       "thumbnail": "/homeflix-v2.png",
       "description": "간단하게 개인용 미디어 서버를 구축하고 관리할 수 있는 넷플릭스 클론 프로젝트입니다. Vue 3와 Vuetify를 사용하여 머티리얼 디자인 기반의 반응형 UI를 구현했으며, Pocketbase를 백엔드로 활용하여 사용자 인증과 데이터 저장을 처리합니다.",
-      "status": "완료",
       "period": {
         "start": "2023.06",
         "end": "2024.10"
@@ -52,7 +65,6 @@
       "title": "TryBit - 가상 화폐 모의 투자 플랫폼",
       "thumbnail": "https://github.com/Guest-01/trybit/raw/master/loginAnimation.gif",
       "description": "주식에 비해 가상화폐는 모의 투자 플랫폼이 부족하다는 점에 착안하여, 업비트 거래소의 실시간 시세 API를 활용한 가상 화폐 모의 투자 플랫폼을 개발했습니다. Vue.js와 TailwindCSS로 프론트엔드를 구축하고, Firebase를 백엔드로 사용하여 사용자 인증과 데이터 관리를 처리합니다.",
-      "status": "완료",
       "period": {
         "start": "2021.12",
         "end": "2024.12"
