@@ -1,6 +1,6 @@
 ---
 title: 'GitHub Actions로 Docker 이미지를 자동으로 빌드하고 푸시하기'
-description: '부제: Docker Hub 대신 ghcr.io를 사용해본 후기'
+description: 'Docker Hub 대신 ghcr.io를 사용해본 후기'
 publishDate: 2025-12-01
 tags: ['GitHub Actions', 'Docker', 'CI/CD']
 draft: false
