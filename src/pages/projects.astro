@@ -362,6 +362,8 @@ const projects = projectsData.projects;
 		const overlayImage = document.getElementById('overlayImage');
 		const closeButton = document.querySelector('.close-button');
 
+		if (!overlay || !(overlayImage instanceof HTMLImageElement)) return;
+
 		// 오버레이 열기 함수
 		const openOverlay = (imageSrc: string, imageTitle: string) => {
 			overlayImage.src = imageSrc || '';
