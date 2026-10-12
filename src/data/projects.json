@@ -1,6 +1,21 @@
 {
   "projects": [
     {
+      "id": "text-viewer-pwa",
+      "title": "펼침 - 홈 화면에 설치해 쓰는 모바일 txt 뷰어 PWA",
+      "thumbnail": "/text-viewer-pwa.webp",
+      "description": "앱 스토어 없이 브라우저에서 바로 설치해 네이티브 앱처럼 쓰는 모바일 txt 뷰어 PWA입니다. 설치하면 전체 화면으로 실행되고, Service Worker로 오프라인에서도 동작하며, 파일 관리자의 '공유'로 txt 파일을 바로 받아 엽니다(Web Share Target). 책은 서버로 보내지 않고 기기의 IndexedDB에 저장하고, 폴더블과 태블릿에서는 책처럼 두 쪽으로 펼쳐 읽을 수 있습니다. 프레임워크와 빌드 도구 없이 순수 HTML/CSS/JS로 작성했습니다.",
+      "period": {
+        "start": "2026.09",
+        "end": "2026.09"
+      },
+      "technologies": ["PWA", "Service Worker", "Web Share Target", "IndexedDB", "Vanilla JS"],
+      "links": {
+        "github": "https://github.com/Guest-01/text-viewer-pwa",
+        "demo": "https://guest-01.github.io/text-viewer-pwa/"
+      }
+    },
+    {
       "id": "liar-game-web",
       "title": "Liar Game Web - 온라인 라이어 게임",
       "thumbnail": "/liar-game-web.png",
