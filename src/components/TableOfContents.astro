@@ -15,6 +15,11 @@ const { headings, variant = 'side' } = Astro.props;
 
 // 헤딩이 없으면 컴포넌트를 렌더링하지 않음
 const hasHeadings = headings && headings.length > 0;
+
+// 목차의 깊이는 그 글에서 가장 높은 헤딩을 1로 하는 상대값
+// (h3만 쓰는 글도 최상위 항목으로 표시되도록)
+const topLevel = Math.min(...headings.map((heading) => heading.level));
+const items = headings.map((heading) => ({ ...heading, depth: heading.level - topLevel + 1 }));
 ---
 
 {hasHeadings && variant === 'side' && (
@@ -22,8 +27,8 @@ const hasHeadings = headings && headings.length > 0;
     <nav class="toc-nav">
       <h3 class="toc-title">목차</h3>
       <ul class="toc-list">
-        {headings.map((heading) => (
-          <li class={`toc-item toc-level-${heading.level}`}>
+        {items.map((heading) => (
+          <li class={`toc-item toc-level-${heading.depth}`}>
             <a href={`#${heading.id}`} class="toc-link" data-heading-id={heading.id}>
               {heading.text}
             </a>
@@ -39,8 +44,8 @@ const hasHeadings = headings && headings.length > 0;
     <summary class="toc-inline-summary">목차</summary>
     <nav>
       <ul class="toc-list">
-        {headings.map((heading) => (
-          <li class={`toc-item toc-level-${heading.level}`}>
+        {items.map((heading) => (
+          <li class={`toc-item toc-level-${heading.depth}`}>
             <a href={`#${heading.id}`} class="toc-link" data-heading-id={heading.id}>
               {heading.text}
             </a>
@@ -203,20 +208,18 @@ const hasHeadings = headings && headings.length > 0;
     font-weight: 500;
   }
 
-  /* 헤딩 레벨별 들여쓰기 */
+  /* 깊이별 들여쓰기: 왼쪽 강조선은 같은 위치에 두고 글자만 안쪽으로 민다 */
   .toc-level-1 .toc-link {
     font-weight: 500;
   }
 
   .toc-level-2 .toc-link {
-    padding-left: 1rem;
-    margin-left: -1rem;
+    padding-left: 1.25rem;
     font-size: 0.85rem;
   }
 
   .toc-level-3 .toc-link {
-    padding-left: 1.5rem;
-    margin-left: -1.5rem;
+    padding-left: 2rem;
     font-size: 0.8rem;
     color: #888;
   }
