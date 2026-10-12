@@ -7,15 +7,17 @@ interface Heading {
 
 interface Props {
   headings: Heading[];
+  // side: 본문 옆에 고정되는 목차 (넓은 화면), inline: 본문 위의 접이식 목차 (좁은 화면)
+  variant?: 'side' | 'inline';
 }
 
-const { headings } = Astro.props;
+const { headings, variant = 'side' } = Astro.props;
 
 // 헤딩이 없으면 컴포넌트를 렌더링하지 않음
 const hasHeadings = headings && headings.length > 0;
 ---
 
-{hasHeadings && (
+{hasHeadings && variant === 'side' && (
   <aside class="table-of-contents">
     <nav class="toc-nav">
       <h3 class="toc-title">목차</h3>
@@ -32,40 +34,57 @@ const hasHeadings = headings && headings.length > 0;
   </aside>
 )}
 
+{hasHeadings && variant === 'inline' && (
+  <details class="toc-inline">
+    <summary class="toc-inline-summary">목차</summary>
+    <nav>
+      <ul class="toc-list">
+        {headings.map((heading) => (
+          <li class={`toc-item toc-level-${heading.level}`}>
+            <a href={`#${heading.id}`} class="toc-link" data-heading-id={heading.id}>
+              {heading.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  </details>
+)}
+
 {hasHeadings && (
   <script>
     // TOC 기능 초기화
     function initTableOfContents() {
-      // 목차 링크와 그 링크가 가리키는 헤딩을 짝지음
-      const sections = [...document.querySelectorAll<HTMLAnchorElement>('.toc-link')].flatMap((link) => {
-        const heading = document.getElementById(link.dataset.headingId ?? '');
-        return heading ? [{ link, heading }] : [];
-      });
+      // 옆 목차와 접이식 목차가 같은 헤딩을 가리키므로, 링크와 헤딩을 따로 모은다
+      const links = [...document.querySelectorAll<HTMLAnchorElement>('.toc-link')];
+      const headings = [...new Set(links.map((link) => link.dataset.headingId ?? ''))]
+        .map((id) => document.getElementById(id))
+        .filter((heading): heading is HTMLElement => heading !== null);
 
-      if (sections.length === 0) return;
+      if (headings.length === 0) return;
 
       // 헤딩 상단이 이 선(뷰포트 상단 기준 px)을 지나면 그 섹션을 읽는 중으로 본다.
       // 목차 클릭 시 헤딩이 멈추는 위치(scroll-margin-top)보다 조금 아래로 잡는다.
-      const activeLine = parseFloat(getComputedStyle(sections[0].heading).scrollMarginTop) + 25;
+      const activeLine = parseFloat(getComputedStyle(headings[0]).scrollMarginTop) + 25;
 
-      function setActive(target?: HTMLAnchorElement) {
-        sections.forEach(({ link }) => link.classList.toggle('active', link === target));
+      function setActive(headingId?: string) {
+        links.forEach((link) => link.classList.toggle('active', link.dataset.headingId === headingId));
       }
 
       // 스크롤 위치 기준으로 현재 섹션 계산
       function updateActiveFromScroll() {
         // 페이지 끝에서는 마지막 헤딩이 기준선까지 올라오지 못하므로 마지막 항목을 활성화
         const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
-        let current = atBottom ? sections[sections.length - 1] : undefined;
+        let current = atBottom ? headings[headings.length - 1] : undefined;
 
         if (!current) {
-          for (const section of sections) {
-            if (section.heading.getBoundingClientRect().top > activeLine) break;
-            current = section;
+          for (const heading of headings) {
+            if (heading.getBoundingClientRect().top > activeLine) break;
+            current = heading;
           }
         }
 
-        setActive(current?.link);
+        setActive(current?.id);
       }
 
       // 목차 클릭으로 스크롤되는 동안에는 클릭한 항목을 유지
@@ -77,11 +96,14 @@ const hasHeadings = headings && headings.length > 0;
       };
       window.addEventListener('scrollend', unlock);
 
-      sections.forEach(({ link, heading }) => {
+      links.forEach((link) => {
+        const heading = document.getElementById(link.dataset.headingId ?? '');
+        if (!heading) return;
+
         link.addEventListener('click', (e) => {
           e.preventDefault();
 
-          setActive(link);
+          setActive(heading.id);
           clickScrolling = true;
           window.clearTimeout(unlockTimer);
           // scrollend가 오지 않는 경우(미지원 브라우저, 이미 그 위치인 경우) 대비
@@ -199,7 +221,40 @@ const hasHeadings = headings && headings.length > 0;
     color: #888;
   }
 
+  /* 접이식 목차 (좁은 화면에서 본문 위에 표시) */
+  .toc-inline {
+    display: none;
+    margin-bottom: 2rem;
+    padding: 0.75rem 1.5rem;
+    background: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+  }
+
+  .toc-inline-summary {
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .toc-inline[open] .toc-inline-summary {
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
   /* 다크모드 스타일 */
+  :global(html[data-theme="dark"]) .toc-inline {
+    background: #333;
+    border-color: #555;
+  }
+
+  :global(html[data-theme="dark"]) .toc-inline-summary {
+    color: #f0f0f0;
+    border-bottom-color: #555;
+  }
+
   :global(html[data-theme="dark"]) .toc-nav {
     background: rgba(45, 45, 45, 0.95);
     border-color: #555;
@@ -233,6 +288,10 @@ const hasHeadings = headings && headings.length > 0;
   @media (max-width: 1299px) {
     .table-of-contents {
       display: none;
+    }
+
+    .toc-inline {
+      display: block;
     }
   }
 </style>

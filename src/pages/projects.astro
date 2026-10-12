@@ -49,8 +49,8 @@ const projects = projectsData.projects;
 						))}
 					</div>
 					<div class="project-links">
-						<a href={project.links.github} class="link">GitHub</a>
-						<a href={project.links.demo} class="link">Demo</a>
+						{project.links.github && <a href={project.links.github} class="link">GitHub</a>}
+						{project.links.demo && <a href={project.links.demo} class="link">Demo</a>}
 					</div>
 				</div>
 			</div>

@@ -18,4 +18,14 @@ export default defineConfig({
   
   // username.github.io 저장소는 루트에서 서빙, 일반 저장소는 서브패스에서 서빙
   base: isGitHubPages && !isUserSite ? `/${repositoryName}/` : '/',
+
+  // 코드 블록: 라이트/다크 테마를 함께 출력하고 CSS에서 사이트 테마에 맞춰 전환
+  markdown: {
+    shikiConfig: {
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark',
+      },
+    },
+  },
 });

@@ -59,7 +59,10 @@ const headings = rawHeadings
 				<p class="post-description">{post.data.description}</p>
 			)}
 		</header>
-		
+
+		<!-- 좁은 화면용 접이식 목차 -->
+		<TableOfContents headings={headings} variant="inline" />
+
 		<div class="post-content">
 			<Content />
 		</div>
@@ -204,11 +207,15 @@ const headings = rawHeadings
 	}
 
 	.post-content :global(pre) {
-		background-color: #f8f9fa;
 		padding: 1rem;
 		border-radius: 6px;
 		overflow-x: auto;
 		margin: 1.5rem 0;
+	}
+
+	/* 코드 블록 색은 하이라이터(Shiki)가 인라인 스타일로 지정하므로 !important로 덮어쓴다 */
+	.post-content :global(.astro-code) {
+		background-color: #f8f9fa !important;
 	}
 
 	.post-content :global(pre code) {
@@ -322,8 +329,14 @@ const headings = rawHeadings
 		color: #e4e4e4;
 	}
 
-	:global(html[data-theme="dark"]) .post-content :global(pre) {
-		background-color: #2d2d2d;
+	/* 다크모드에서는 Shiki가 함께 내보낸 다크 테마 변수로 전환 */
+	:global(html[data-theme="dark"]) .post-content :global(.astro-code),
+	:global(html[data-theme="dark"]) .post-content :global(.astro-code span) {
+		color: var(--shiki-dark) !important;
+		background-color: var(--shiki-dark-bg) !important;
+		font-style: var(--shiki-dark-font-style) !important;
+		font-weight: var(--shiki-dark-font-weight) !important;
+		text-decoration: var(--shiki-dark-text-decoration) !important;
 	}
 
 	:global(html[data-theme="dark"]) .post-content :global(pre code) {
