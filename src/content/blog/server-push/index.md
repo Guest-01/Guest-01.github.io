@@ -122,7 +122,7 @@ function getRandomInt(min, max) {
 
 여기서는 `chart.js`를 이용해서 차트의 값을 동적으로 변경하기 위해 사용하고 있습니다. 따라서 0.5초마다 그래프의 크기가 변경되게 됩니다. 결과는 화면은 아래처럼 됩니다.
 
-![socketio-demo](/blog-images/socketio-example.gif)
+![socketio-demo](./socketio-example.gif)
 
 ### SSE (Server Sent Event)
 
@@ -201,7 +201,7 @@ app.get('/sse/cpumemdisk', (req, res) => {
 
 결과 화면은 아래와 같고 당연히 겉으로 볼 때는 SocketIO 구현과 동일합니다.
 
-![sse-example](/blog-images/sse-example.gif)
+![sse-example](./sse-example.gif)
 
 이렇게 둘다 사용해보았을 때 큰 차이는 없는 것 같습니다. 다만 외부 라이브러리를 사용할 수 있느냐의 여부에 따라 갈릴 수 있을 것 같고, 인프라 관점에서 SocketIO는 웹소켓 관련 방화벽 정책 등을 추가로 설정해주어야할 수 있습니다. SSE의 경우에는 HTTP 기반이고, 클라이언트도 브라우저 내장 API를 활용하기 때문에 호환성이 좋을 것으로 보이나, SocketIO보다는 조금 더 신경써야할 것이 많은 것 같습니다. (헤더 설정 등)
 

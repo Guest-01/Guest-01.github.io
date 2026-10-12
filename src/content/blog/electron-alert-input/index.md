@@ -18,7 +18,7 @@ Electron에서는 이 동작이 예기치 못한 오류를 일으켜서, alert�
 
 |            인증번호 발송 직후            |            input칸 입력 안됨             |
 | :--------------------------------------: | :--------------------------------------: |
-| ![](/blog-images/electron-alert-input-1.png) | ![](/blog-images/electron-alert-input-2.png) |
+| ![](./electron-alert-input-1.png) | ![](./electron-alert-input-2.png) |
 
 본문 초두에 요약해드렸듯이, 원인은 Electron과 window.alert 간의 충돌로 보입니다. 관련하여 StackOverflow와 Github Issue 글을 찾을 수 있었습니다.
 

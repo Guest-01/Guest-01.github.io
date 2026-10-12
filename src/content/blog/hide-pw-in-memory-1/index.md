@@ -24,13 +24,13 @@ draft: false
 
 윈도우 환경에서 작업관리자를 켜면 아래와 같이 원하는 프로세스의 메모리 덤프파일을 만들 수 있습니다.
 
-![윈도우작업관리자메모리덤프](/blog-images/make-mem-dump-file.png)
+![윈도우작업관리자메모리덤프](./make-mem-dump-file.png)
 
 만들어진 덤프파일은 `C:\Users\{사용자명}\AppData\Local\Temp` 경로에 `프로세스 이름.DMP` 파일로 저장됩니다.
 
 이 덤프파일을 [HxD](https://mh-nexus.de/en/hxd/) 같은 Hex 에디터로 열어서 검색해보면 메모리를 조사해볼 수 있습니다.
 
-![hxd-about](/blog-images/hxd-about.png)
+![hxd-about](./hxd-about.png)
 
 따라서 브라우저에서 비밀번호를 입력하고 작업관리자에서 브라우저 프로세스의 덤프파일을 뜬 뒤, HxD 에디터로 열어서 검색(`Ctrl + F`)했을 때 비밀번호가 검색되면 안되는 것입니다.
 

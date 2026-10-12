@@ -10,7 +10,7 @@ draft: false
 
 백오피스 개발을 하다보면 테이블 형태의 UI를 많이 쓰곤 합니다. 이때 컬럼(필드)의 종류가 많거나 아니면 단순히 한 필드의 내용 자체가 길어서 두줄로 넘어가거나, 보기 싫을 정도로 큰 비율을 차지하고 있는 경우가 있습니다.
 
-![overflowed](/blog-images/overflow-in-table-1.png)
+![overflowed](./overflow-in-table-1.png)
 
 위 그림에서 보듯, `column2`의 내용이 각 행마다 4줄, 2줄, 1줄로 다르게 나오는 것이 통일감을 해치는 느낌이 있습니다.
 
@@ -29,7 +29,7 @@ td {
 
 이렇게 해주면 `td` 태그의 길이가 500px을 넘어가면 말줄임표("...") 처리를 해줍니다.
 
-![overflowed-solved](/blog-images/overflow-in-table-2.png)
+![overflowed-solved](./overflow-in-table-2.png)
 
 보기 좋게 모두 같은 높이로 맞춰졌습니다.
 
@@ -54,6 +54,6 @@ td:hover {
 
 `title` 속성에 원래 내용을 넣어주면 마우스를 올렸을 때 툴팁으로 내용을 표시해줍니다.
 
-![overflowed-title](/blog-images/overflow-in-table-3.png)
+![overflowed-title](./overflow-in-table-3.png)
 
 끝.

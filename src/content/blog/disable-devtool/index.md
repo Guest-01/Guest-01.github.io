@@ -16,11 +16,11 @@ draft: false
 
 우선 개발자도구 차단이 가능한지 레퍼런스를 찾아보았습니다. 저희 이사님(개발팀장/백엔드)께서는 신한카드 홈페이지를 예로 드시면서 여기 홈페이지는 개발자도구가 안열린다고 이렇게 해달라고 하셨습니다. **하지만 제가 확인해보니 개발자 도구를 여는 단축키(F12, Ctrl+Shift+I)를 막은 것이지 개발자도구를 막은 것이 아니라서, 브라우저 메뉴를 클릭해 개발자 도구를 열면 그냥 열려버렸습니다.**
 
-![신한카드-홈페이지-개발자도구](/blog-images/card-devtool-open.png)
+![신한카드-홈페이지-개발자도구](./card-devtool-open.png)
 
 이 외에 어떤 사이트를 찾아봐도 개발자 도구를 완벽히 막는 사이트는 없어보였습니다. 레퍼런스 찾기는 둘째치고, 생각을 조금 해보면 프론트엔드 개발자가 통제할 수 있는 것은 Web API 외에는 없기 때문에 API 목록을 확인해보았으나 따로 개발자도구 관련 API는 공개된 것이 없었습니다. 즉, 프론트엔드 스크립트로 브라우저 개발자 도구에 직접적으로 관여하는 것은 **불가능**해보였습니다.
 
-![브라우저-API-목록](/blog-images/web-api-list.png)
+![브라우저-API-목록](./web-api-list.png)
 
 [MDN의 Web API 목록](https://developer.mozilla.org/en-US/docs/Web/API)
 
@@ -28,7 +28,7 @@ draft: false
 
 그래도 없는게 없다는 npm에 혹시 관련 라이브러리가 있을까 싶어 찾아보니 아래와 같은 패키지가 있었습니다.
 
-![라이브러리-readme.md](/blog-images/disable-devtool-readme.png)
+![라이브러리-readme.md](./disable-devtool-readme.png)
 
 https://github.com/theajack/disable-devtool
 
@@ -36,7 +36,7 @@ https://github.com/theajack/disable-devtool
 
 간단하게 html을 만들어서 `<script>` 태그로 삽입해보았고 아래와 같이 브라우저 메뉴를 통해 개발자도구를 열면 순식간에 창이 닫혀버리는 것을 볼 수 있었습니다.
 
-![개발자도구를-열어서-닫히는-gif](/blog-images/disable-devtool-action.gif)
+![개발자도구를-열어서-닫히는-gif](./disable-devtool-action.gif)
 
 ## 분석 및 결론
 

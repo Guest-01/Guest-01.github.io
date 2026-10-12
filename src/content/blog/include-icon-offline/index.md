@@ -12,11 +12,11 @@ draft: false
 
 인터넷이 안되는 폐쇄망 환경에서 우리 애플리케이션(`electron`으로 만든 데스크톱 앱)을 실행하면 아이콘이 있어야할 자리에 아무것도 보이지 않는 현상이 나타났습니다.
 
-![증상화면](/blog-images/icon-missing-1.png)
+![증상화면](./icon-missing-1.png)
 
 원래 정상 애플리케이션의 모습은 아래와 같습니다.
 
-![정상화면](/blog-images/icon-missing-2.png)
+![정상화면](./icon-missing-2.png)
 
 ### 초기 진단
 
@@ -26,7 +26,7 @@ draft: false
 
 개발환경에서 네트워크탭을 열어서 외부에서 불러오고 있는 asset들 중 아이콘 관련한 내역이 있는지 살펴보았습니다.
 
-![네트워크탭](/blog-images/icon-missing-3.png)
+![네트워크탭](./icon-missing-3.png)
 
 역시나 사용중인 머티리얼 디자인의 css와 font파일을 CDN에서 불러오고 있는 것을 확인할 수 있었습니다. 해당 css와 폰트파일을 내장 번들할 수 있도록 방법을 찾아서 적용하면 해결될 것 같습니다.
 
@@ -57,13 +57,13 @@ export default createVuetify({
 
 이렇게 변경 후 다시 개발자 도구를 확인해보니 이전처럼 cdn에서 불러오는 것이 아닌, 로컬에서 참조하고 있는 것을 확인할 수 있었습니다.
 
-![네트워크탭2](/blog-images/icon-missing-4.png)
+![네트워크탭2](./icon-missing-4.png)
 
 ### 그러나...
 
 그런데 최종 확인을 위해 이 상태에서 프로덕션으로 빌드하여 설치한 후 확인해보니 아이콘 위치에 이번에는 네모 모양의 글자가 나타나는 증상이 새롭게 나타났습니다. 마찬가지로 개발자도구를 확인해보니 내장시킨 폰트를 불러오지 못하는 것으로 보였습니다.
 
-![네트워크탭3](/blog-images/icon-missing-5.png)
+![네트워크탭3](./icon-missing-5.png)
 
 ### 2차 분석
 
@@ -81,7 +81,7 @@ export default createVuetify({
 
 ### 해결
 
-![해결](/blog-images/icon-missing-6.png)
+![해결](./icon-missing-6.png)
 
 그 결과 `file://` 프로토콜에서는 모든 참조가 정상적인 경로로 이루어지고 있어서 내장한 폰트파일도 정상적으로 불러오고, 따라서 아이콘도 모두 제대로 표기되는 것을 확인할 수 있습니다.
 

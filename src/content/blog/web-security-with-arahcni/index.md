@@ -46,15 +46,15 @@ Use Ctrl-C to stop
 ```
 이제 위의 URL로 접속해보면 로그인 페이지가 나옵니다.
 
-![](/blog-images/arachni-login.png)
+![](./arachni-login.png)
 
 **초기 계정은 `README`에 적혀있으니 확인합니다.** 초기 계정으로 접속하면 대시보드 화면이 나오고 상단바에 "Scans"라는 메뉴가 가장 첫번째로 보일 것입니다.
 
-![](/blog-images/arachni-dashboard.png)
+![](./arachni-dashboard.png)
 
 `+ New`를 눌러서 새로운 스캔을 시작합니다.
 
-![](/blog-images/arachni-scan_new.png)
+![](./arachni-scan_new.png)
 
 검사는 기본값으로 진행하였습니다. "Target URL"이라고 적힌 부분에 검사할 웹사이트 주소를 적어주시면 됩니다. 그리고 하단의 "Go!"를 누르면 바로 검사가 진행됩니다.
 
@@ -62,7 +62,7 @@ Use Ctrl-C to stop
 
 아래와 같이 검사결과가 나왔으며, `Informational`을 제외하고 `Medium`과 `Low` 레벨 취약점이 각 1개씩 총 2개가 발견되어 처리해보았습니다.
 
-![](/blog-images/arachni-report.png)
+![](./arachni-report.png)
 
 두 개의 취약점 모두 어떤 특정 헤더가 존재하지 않는다는 뜻이었습니다. 인터넷에 검색을 해보니, `Strict-Transport-Security` 헤더는 클라이언트(브라우저)에게 `https://`를 강제하는 헤더이고, 이것 없이 그냥 http를 `301` 응답으로 https로 리다이렉트 시키는 것은 여전히 `man-in-the-middle` 공격에 취약하기 때문에 반드시 설정해야한다고 합니다.
 
@@ -84,7 +84,7 @@ http {
 
 이렇게 하고 Nginx를 restart한 다음 다시 취약점 점검을 돌려보았습니다.
 
-![](/blog-images/arachni-report-after.png)
+![](./arachni-report-after.png)
 
 이렇게 취약점이 사라진 것을 볼 수 있습니다!
 

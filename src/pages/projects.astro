@@ -21,6 +21,8 @@ const projects = projectsData.projects;
 							src={project.thumbnail}
 							alt={`${project.title} 썸네일`}
 							class="thumbnail"
+							loading="lazy"
+							decoding="async"
 							data-image={project.thumbnail}
 							data-title={project.title}
 						/>
