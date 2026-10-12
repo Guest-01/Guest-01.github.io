@@ -79,7 +79,7 @@ npm run astro -- --help          # CLI 도움말
 ### 2. 콘텐츠 추가
 - **블로그**: `src/content/blog/` 에 마크다운 파일 추가
   - 이미지가 있는 글은 `글-이름/index.md` 폴더로 만들고 이미지를 같은 폴더에 두어 `![설명](./이미지.png)`로 참조 (빌드 시 WebP 변환, 지연 로딩 자동 적용)
-- **프로젝트**: `src/data/projects.json` 수정 (썸네일은 `public/`에 두고 `/파일명`으로 참조)
+- **프로젝트**: `src/data/projects.json` 수정 (썸네일은 `public/`에 두고 `/파일명`으로 참조, `ai` 필드로 "AI 협업"/"직접 개발" 배지 지정)
 - **이력서**: `src/data/resume.json` 수정
 
 ### 3. 댓글 시스템 활성화

@@ -43,6 +43,9 @@ const projects = projectsData.projects;
 						<span class="period">
 							{project.period.start} - {project.period.end}
 						</span>
+						<span class={`ai-badge ${project.ai.used ? 'ai-assisted' : 'ai-none'}`}>
+							{project.ai.used ? ['AI 협업', ...(project.ai.tools ?? [])].join(' · ') : '직접 개발'}
+						</span>
 					</div>
 					<p>{project.description}</p>
 					<div class="tech-stack">
@@ -98,15 +101,9 @@ const projects = projectsData.projects;
 		border: 1px solid #eee;
 		padding: 1.5rem;
 		margin-bottom: 1.5rem;
-		transition: transform 0.2s ease, box-shadow 0.2s ease;
 		display: flex;
 		flex-direction: column; /* 세로 배치 */
 		gap: 1rem;
-	}
-
-	.project-card.with-thumbnail:hover {
-		transform: translateY(-2px);
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 	}
 
 	.thumbnail-wrapper {
@@ -170,6 +167,26 @@ const projects = projectsData.projects;
 		color: #666;
 	}
 
+	/* AI 사용 여부 배지 */
+	.ai-badge {
+		padding: 0.15rem 0.6rem;
+		border-radius: 12px;
+		border: 1px solid transparent;
+		font-size: 0.8rem;
+		font-weight: 500;
+		white-space: nowrap;
+	}
+
+	.ai-assisted {
+		background-color: #e6f2fb;
+		color: #007acc;
+	}
+
+	.ai-none {
+		border-color: #ccc;
+		color: #666;
+	}
+
 	.project-card p {
 		color: #555;
 		line-height: 1.6;
@@ -226,10 +243,6 @@ const projects = projectsData.projects;
 		border-color: #555;
 	}
 
-	:global(html[data-theme="dark"]) .project-card:hover {
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-	}
-
 	:global(html[data-theme="dark"]) .project-card h2 {
 		color: #f0f0f0;
 	}
@@ -240,6 +253,16 @@ const projects = projectsData.projects;
 
 	:global(html[data-theme="dark"]) .period {
 		color: #a0a0a0;
+	}
+
+	:global(html[data-theme="dark"]) .ai-assisted {
+		background-color: rgba(30, 144, 255, 0.18);
+		color: #82c0ff;
+	}
+
+	:global(html[data-theme="dark"]) .ai-none {
+		border-color: #666;
+		color: #b4b4b4;
 	}
 
 	:global(html[data-theme="dark"]) .tech {

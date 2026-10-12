@@ -9,6 +9,7 @@
         "start": "2026.09",
         "end": "2026.09"
       },
+      "ai": { "used": true, "tools": ["Claude Code"] },
       "technologies": ["PWA", "Service Worker", "Web Share Target", "IndexedDB", "Vanilla JS"],
       "links": {
         "github": "https://github.com/Guest-01/text-viewer-pwa",
@@ -24,6 +25,7 @@
         "start": "2025.11",
         "end": "2025.12"
       },
+      "ai": { "used": true, "tools": ["Claude Code"] },
       "technologies": ["Express", "SocketIO"],
       "links": {
         "github": "https://github.com/Guest-01/liar-game-web",
@@ -39,6 +41,7 @@
         "start": "2025.07",
         "end": "2025.10"
       },
+      "ai": { "used": true, "tools": ["Claude Code"] },
       "technologies": ["Astro", "Github Pages", "Github Actions"],
       "links": {
         "github": "https://github.com/Guest-01/devlog-template",
@@ -54,6 +57,7 @@
         "start": "2024.02",
         "end": "2025.10"
       },
+      "ai": { "used": false },
       "technologies": ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "Vercel"],
       "links": {
         "github": "https://github.com/Guest-01/rim",
@@ -69,6 +73,7 @@
         "start": "2023.06",
         "end": "2024.10"
       },
+      "ai": { "used": false },
       "technologies": ["Vue.js", "Vuetify", "TypeScript", "Pocketbase"],
       "links": {
         "github": "https://github.com/Guest-01/homeflix-v2",
@@ -84,6 +89,7 @@
         "start": "2021.12",
         "end": "2024.12"
       },
+      "ai": { "used": false },
       "technologies": ["Vue.js", "TailwindCSS", "Firebase"],
       "links": {
         "github": "https://github.com/Guest-01/trybit",
