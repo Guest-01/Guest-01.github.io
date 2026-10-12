@@ -3,13 +3,16 @@ import { SITE } from '../config/site';
 
 export interface Props {
 	title?: string;
+	description?: string;
 }
 
-const { title = SITE.title } = Astro.props;
+const { title = SITE.title, description = SITE.description } = Astro.props;
 
 // 현재 경로 확인 및 base path 처리
-const currentPath = Astro.url.pathname;
 const base = import.meta.env.BASE_URL;
+// base와 끝 슬래시를 제거한 상대 경로 ('', 'projects', 'blog/some-post' 등)
+const currentPath = Astro.url.pathname.slice(base.length).replace(/\/$/, '');
+const isBlog = currentPath === '' || currentPath.startsWith('blog/');
 ---
 
 <!doctype html>
@@ -20,6 +23,7 @@ const base = import.meta.env.BASE_URL;
 		<link rel="icon" type="image/svg+xml" href={`${base}favicon.svg`} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+		<meta name="description" content={description} />
 		<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,35 +35,6 @@ const base = import.meta.env.BASE_URL;
 				const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 				const theme = savedTheme || (systemPrefersDark ? 'dark' : 'light');
 				document.documentElement.setAttribute('data-theme', theme);
-				
-				// 아이콘도 즉시 설정
-				function setThemeIcon() {
-					const themeToggle = document.getElementById('theme-toggle');
-					const moonIcon = themeToggle?.querySelector('.moon-icon');
-					const sunIcon = themeToggle?.querySelector('.sun-icon');
-					
-					if (moonIcon && sunIcon) {
-						if (theme === 'dark') {
-							// 태양 아이콘 표시, 달 아이콘 숨김
-							moonIcon.style.display = 'none';
-							sunIcon.style.display = 'inline';
-						} else {
-							// 달 아이콘 표시, 태양 아이콘 숨김
-							moonIcon.style.display = 'inline';
-							sunIcon.style.display = 'none';
-						}
-					} else {
-						// DOM이 아직 준비되지 않은 경우 잠시 후 재시도
-						setTimeout(setThemeIcon, 10);
-					}
-				}
-				
-				// DOM 로드 후 아이콘 설정
-				if (document.readyState === 'loading') {
-					document.addEventListener('DOMContentLoaded', setThemeIcon);
-				} else {
-					setThemeIcon();
-				}
 			})();
 		</script>
 	</head>
@@ -68,14 +43,14 @@ const base = import.meta.env.BASE_URL;
 			<nav>
 				<a href={base} class="logo">{SITE.name}</a>
 				<div class="nav-links">
-					<a href={base} class={currentPath === base || currentPath === `${base}` ? 'active' : ''}>블로그</a>
-					<a href={`${base}projects`} class={currentPath === `${base}projects` ? 'active' : ''}>프로젝트</a>
-					<a href={`${base}resume`} class={currentPath === `${base}resume` ? 'active' : ''}>이력서</a>
+					<a href={base} class={isBlog ? 'active' : ''}>블로그</a>
+					<a href={`${base}projects`} class={currentPath === 'projects' ? 'active' : ''}>프로젝트</a>
+					<a href={`${base}resume`} class={currentPath === 'resume' ? 'active' : ''}>이력서</a>
 					<button id="theme-toggle" class="theme-toggle" aria-label="다크 모드 토글">
 						<svg class="theme-icon moon-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 							<path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
 						</svg>
-						<svg class="theme-icon sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+						<svg class="theme-icon sun-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 							<path d="M12 12m-4 0a4 4 0 1 0 8 0a4 4 0 1 0 -8 0" />
 							<path d="M3 12h1m8 -9v1m8 8h1m-9 8v1m-6.4 -15.4l.7 .7m12.1 -.7l-.7 .7m0 11.4l.7 .7m-12.1 -.7l-.7 .7" />
 						</svg>
@@ -95,12 +70,6 @@ const base = import.meta.env.BASE_URL;
 		const themeToggle = document.getElementById('theme-toggle');
 		const html = document.documentElement;
 		
-		// 현재 테마 상태 확인 (이미 head script에서 설정됨)
-		const currentTheme = (html.getAttribute('data-theme') || 'light') as 'light' | 'dark';
-		
-		// 아이콘 동기화 (head script에서 이미 설정했지만 한번 더 확인)
-		updateToggleIcon(currentTheme);
-		
 		// 토글 버튼 클릭 이벤트
 		themeToggle?.addEventListener('click', () => {
 			const currentTheme = html.getAttribute('data-theme');
@@ -108,26 +77,8 @@ const base = import.meta.env.BASE_URL;
 			
 			html.setAttribute('data-theme', newTheme);
 			localStorage.setItem('theme', newTheme);
-			updateToggleIcon(newTheme);
 			updateGiscusTheme(newTheme);
 		});
-		
-		function updateToggleIcon(theme: 'light' | 'dark') {
-			const moonIcon = themeToggle?.querySelector<HTMLElement>('.moon-icon');
-			const sunIcon = themeToggle?.querySelector<HTMLElement>('.sun-icon');
-			
-			if (moonIcon && sunIcon) {
-				if (theme === 'dark') {
-					// 태양 아이콘 표시, 달 아이콘 숨김
-					moonIcon.style.display = 'none';
-					sunIcon.style.display = 'inline';
-				} else {
-					// 달 아이콘 표시, 태양 아이콘 숨김
-					moonIcon.style.display = 'inline';
-					sunIcon.style.display = 'none';
-				}
-			}
-		}
 		
 		// giscus 테마 동기화 함수
 		function updateGiscusTheme(theme: 'light' | 'dark') {
@@ -234,11 +185,6 @@ const base = import.meta.env.BASE_URL;
 	html[data-theme="dark"] nav.floating {
 		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
 		background-color: rgba(45, 45, 45, 0.95);
-		max-width: 800px;
-		margin: 0.5rem auto;
-		padding: 0.5rem 2rem 0.5rem 2rem;
-		border-radius: 12px;
-		top: 0.5rem;
 	}
 
 	.logo {
@@ -326,6 +272,19 @@ const base = import.meta.env.BASE_URL;
 		color: #666;
 	}
 
+	/* 테마에 따른 아이콘 전환 */
+	.sun-icon {
+		display: none;
+	}
+
+	html[data-theme="dark"] .moon-icon {
+		display: none;
+	}
+
+	html[data-theme="dark"] .sun-icon {
+		display: inline;
+	}
+
 	html[data-theme="dark"] .theme-toggle {
 		border-color: #555;
 		color: #b4b4b4;
@@ -346,121 +305,20 @@ const base = import.meta.env.BASE_URL;
 		padding: 0;
 	}
 
-	/* 공통 다크모드 스타일 */
-	html[data-theme="dark"] h1,
-	html[data-theme="dark"] h2,
-	html[data-theme="dark"] h3 {
-		color: #f0f0f0;
-	}
-
-	html[data-theme="dark"] p {
-		color: #d0d0d0;
-	}
-
-	/* 카드 스타일 다크모드 */
-	html[data-theme="dark"] .project-card,
-	html[data-theme="dark"] .resume-section {
-		background-color: #3a3a3a;
-		border-color: #555;
-		color: #e4e4e4;
-	}
-
-	html[data-theme="dark"] .post-title {
-		color: #f0f0f0;
-	}
-
-	html[data-theme="dark"] .post-date {
-		color: #a0a0a0;
-	}
-
-	/* 프로젝트 카드 다크모드 */
-	html[data-theme="dark"] .project-card:hover {
-		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-	}
-
-	html[data-theme="dark"] .status {
-		color: white;
-	}
-
-	html[data-theme="dark"] .period {
-		color: #a0a0a0;
-	}
-
-	html[data-theme="dark"] .tech {
-		background-color: #555;
-		color: #d0d0d0;
-	}
-
-	html[data-theme="dark"] .link {
-		color: #1e90ff;
-	}
-
-	html[data-theme="dark"] .link:hover {
-		color: #4169e1;
-	}
-
-	/* 이력서 다크모드 */
-	html[data-theme="dark"] .resume-section h2 {
-		border-bottom-color: #1e90ff;
-		color: #f0f0f0;
-	}
-
-	html[data-theme="dark"] .skill {
-		background-color: #1e90ff;
-		color: white;
-	}
-
-	html[data-theme="dark"] .experience {
-		border-bottom-color: #555;
-	}
-
-	html[data-theme="dark"] .position {
-		color: #1e90ff;
-	}
-
-	html[data-theme="dark"] .achievements li {
-		color: #d0d0d0;
-	}
-
-	html[data-theme="dark"] .degree {
-		color: #a0a0a0;
-	}
-
-	/* 헤더 다크모드 */
-	html[data-theme="dark"] .blog-header,
-	html[data-theme="dark"] .projects-header,
-	html[data-theme="dark"] .resume-header {
-		border-bottom-color: #555;
-	}
-
-	html[data-theme="dark"] .blog-header p,
-	html[data-theme="dark"] .projects-header p,
-	html[data-theme="dark"] .resume-header p {
-		color: #a0a0a0;
-	}
-
-	/* 홈페이지 다크모드 */
-	html[data-theme="dark"] .subtitle {
-		color: #a0a0a0;
-	}
-
-	html[data-theme="dark"] .intro {
-		color: #d0d0d0;
-	}
-
 	@media (max-width: 768px) {
 		.container {
 			padding: 0.75rem 1rem;
 		}
 
+		/* 컨테이너에 이미 좌우 패딩이 있으므로 메뉴 자체의 좌우 margin은 두지 않음 */
 		nav.floating {
-			padding: 0.5rem 1rem 0.5rem 1rem;
-			margin: 0.5rem 1rem;
-			max-width: calc(100% - 2rem);
+			padding: 0.5rem 0.75rem;
+			margin: 0.5rem 0;
+			max-width: none;
 		}
 
 		.nav-links {
-			gap: 1rem;
+			gap: 0.75rem;
 		}
 
 		.logo {

@@ -28,7 +28,7 @@ npm run astro -- --help          # CLI 도움말
 ## 코드 아키텍처
 
 ### 디렉토리 구조
-- `src/config/site.ts`: 사이트 전역 설정 (이름, 네비게이션, giscus 댓글 등)
+- `src/config/site.ts`: 사이트 전역 설정 (이름, 작성자 정보, giscus 댓글 등)
 - `src/components/`: 재사용 가능한 컴포넌트
   - `Comments.astro`: giscus 댓글 시스템 (조건부 렌더링)
 - `src/content/`: Content Collections (블로그 포스트)
@@ -73,7 +73,6 @@ npm run astro -- --help          # CLI 도움말
 ### 1. 개인화 설정
 `src/config/site.ts`에서 개인 정보 수정:
 - 이름, 이메일, 소셜 링크
-- 네비게이션 메뉴 구성
 - 사이트 메타데이터
 - **giscus 댓글**: `comments.giscusScript`에 giscus.app에서 생성된 스크립트 붙여넣기
 
@@ -111,8 +110,7 @@ npm run astro -- --help          # CLI 도움말
 ### giscus 댓글 통합
 - **조건부 렌더링**: 스크립트 존재 시에만 댓글 섹션 표시
 - **테마 동기화**: 다크모드 토글 시 실시간 테마 변경
-- **초기화**: iframe 로드 완료 후 현재 테마 적용
-- **안전성**: 타이밍 처리 및 무한 루프 방지
+- **초기화**: 스크립트를 클라이언트에서 삽입하며 현재 테마로 바로 로드
 
 ## 기술 스택
 - **프레임워크**: Astro 5.12.0

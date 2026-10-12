@@ -1,56 +1,34 @@
 ---
 import { SITE } from '../config/site';
 
-// giscus 스크립트에서 실제 script 태그가 있는지 확인
-const hasGiscusScript = SITE.comments?.giscusScript && 
-                       SITE.comments.giscusScript.trim() !== '' &&
-                       SITE.comments.giscusScript.includes('<script src="https://giscus.app/client.js"');
+// 붙여넣은 giscus 스크립트에서 data-* 속성만 추출
+const giscusAttrs = Object.fromEntries(
+  [...SITE.comments.giscusScript.matchAll(/data-([\w-]+)="([^"]*)"/g)].map((m) => [m[1], m[2]])
+);
 
-const isCommentsEnabled = hasGiscusScript;
+const isCommentsEnabled = Boolean(giscusAttrs.repo);
 ---
 
 {isCommentsEnabled && (
   <section class="comments-section">
     <h3 class="comments-title">댓글</h3>
-    <div class="comments-container" set:html={SITE.comments.giscusScript} />
+    <div class="comments-container"></div>
   </section>
 )}
 
 {isCommentsEnabled && (
-  <script>
-    // giscus 로드 후 초기 테마 설정
-    function initGiscusTheme() {
-      const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
-      
-      // giscus iframe이 로드될 때까지 기다린 후 테마 설정
-      const checkGiscusFrame = setInterval(() => {
-        const giscusFrame = document.querySelector<HTMLIFrameElement>('iframe.giscus-frame');
-        if (giscusFrame && giscusFrame.contentWindow) {
-          clearInterval(checkGiscusFrame);
-          
-          // 잠시 후 테마 설정 (iframe이 완전히 로드된 후)
-          setTimeout(() => {
-            giscusFrame.contentWindow?.postMessage({
-              giscus: {
-                setConfig: {
-                  theme: currentTheme === 'dark' ? 'dark' : 'light'
-                }
-              }
-            }, 'https://giscus.app');
-          }, 1000);
-        }
-      }, 100);
-      
-      // 10초 후 정리 (무한 루프 방지)
-      setTimeout(() => clearInterval(checkGiscusFrame), 10000);
+  <script is:inline define:vars={{ giscusAttrs }}>
+    // giscus는 스크립트 실행 시점의 data-theme으로 로드되므로, 현재 테마를 넣어 직접 삽입
+    const script = document.createElement('script');
+    script.src = 'https://giscus.app/client.js';
+    for (const [key, value] of Object.entries(giscusAttrs)) {
+      script.setAttribute(`data-${key}`, value);
     }
-    
-    // DOM 로드 후 실행
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initGiscusTheme);
-    } else {
-      initGiscusTheme();
-    }
+    const theme = document.documentElement.getAttribute('data-theme');
+    script.setAttribute('data-theme', theme === 'dark' ? 'dark' : 'light');
+    script.crossOrigin = 'anonymous';
+    script.async = true;
+    document.querySelector('.comments-container').appendChild(script);
   </script>
 )}
 

@@ -36,81 +36,76 @@ const hasHeadings = headings && headings.length > 0;
   <script>
     // TOC 기능 초기화
     function initTableOfContents() {
-      const tocLinks = document.querySelectorAll('.toc-link');
-      const headings = document.querySelectorAll('h1[id], h2[id], h3[id]');
-      
-      if (tocLinks.length === 0 || headings.length === 0) return;
+      // 목차 링크와 그 링크가 가리키는 헤딩을 짝지음
+      const sections = [...document.querySelectorAll<HTMLAnchorElement>('.toc-link')].flatMap((link) => {
+        const heading = document.getElementById(link.dataset.headingId ?? '');
+        return heading ? [{ link, heading }] : [];
+      });
 
-      // 부드러운 스크롤 및 URL 업데이트
-      tocLinks.forEach(link => {
+      if (sections.length === 0) return;
+
+      // 헤딩 상단이 이 선(뷰포트 상단 기준 px)을 지나면 그 섹션을 읽는 중으로 본다.
+      // 목차 클릭 시 헤딩이 멈추는 위치(scroll-margin-top)보다 조금 아래로 잡는다.
+      const activeLine = parseFloat(getComputedStyle(sections[0].heading).scrollMarginTop) + 25;
+
+      function setActive(target?: HTMLAnchorElement) {
+        sections.forEach(({ link }) => link.classList.toggle('active', link === target));
+      }
+
+      // 스크롤 위치 기준으로 현재 섹션 계산
+      function updateActiveFromScroll() {
+        // 페이지 끝에서는 마지막 헤딩이 기준선까지 올라오지 못하므로 마지막 항목을 활성화
+        const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+        let current = atBottom ? sections[sections.length - 1] : undefined;
+
+        if (!current) {
+          for (const section of sections) {
+            if (section.heading.getBoundingClientRect().top > activeLine) break;
+            current = section;
+          }
+        }
+
+        setActive(current?.link);
+      }
+
+      // 목차 클릭으로 스크롤되는 동안에는 클릭한 항목을 유지
+      let clickScrolling = false;
+      let unlockTimer = 0;
+      const unlock = () => {
+        clickScrolling = false;
+        window.clearTimeout(unlockTimer);
+      };
+      window.addEventListener('scrollend', unlock);
+
+      sections.forEach(({ link, heading }) => {
         link.addEventListener('click', (e) => {
           e.preventDefault();
-          const targetId = link.getAttribute('href')?.substring(1);
-          if (!targetId) return;
-          const targetElement = document.getElementById(targetId);
-          
-          if (targetElement) {
-            // 부드러운 스크롤
-            targetElement.scrollIntoView({ 
-              behavior: 'smooth',
-              block: 'start'
-            });
-            
-            // URL 업데이트 (히스토리에 추가하지 않음)
-            history.replaceState(null, '', `#${targetId}`);
-          }
+
+          setActive(link);
+          clickScrolling = true;
+          window.clearTimeout(unlockTimer);
+          // scrollend가 오지 않는 경우(미지원 브라우저, 이미 그 위치인 경우) 대비
+          unlockTimer = window.setTimeout(unlock, 1500);
+
+          heading.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+          // URL 업데이트 (히스토리에 추가하지 않음)
+          history.replaceState(null, '', `#${heading.id}`);
         });
       });
 
-      // Intersection Observer로 활성 섹션 추적
-      const observerOptions = {
-        root: null,
-        rootMargin: '-20% 0px -35% 0px', // 상단 20%, 하단 35% 여백
-        threshold: 0
-      };
-
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          const id = entry.target.id;
-          const tocLink = document.querySelector(`[data-heading-id="${id}"]`);
-          
-          if (entry.isIntersecting) {
-            // 모든 활성 상태 제거
-            tocLinks.forEach(link => link.classList.remove('active'));
-            // 현재 섹션 활성화
-            if (tocLink) {
-              tocLink.classList.add('active');
-              // URL 업데이트
-              history.replaceState(null, '', `#${id}`);
-            }
-          }
+      let ticking = false;
+      window.addEventListener('scroll', () => {
+        if (clickScrolling || ticking) return;
+        ticking = true;
+        requestAnimationFrame(() => {
+          ticking = false;
+          if (!clickScrolling) updateActiveFromScroll();
         });
-      }, observerOptions);
+      }, { passive: true });
 
-      // 모든 헤딩 관찰 시작
-      headings.forEach(heading => observer.observe(heading));
-
-      // 페이지 로드 시 URL 해시 처리
-      function handleInitialHash() {
-        const hash = window.location.hash;
-        if (hash) {
-          const targetElement = document.getElementById(hash.substring(1));
-          if (targetElement) {
-            setTimeout(() => {
-              targetElement.scrollIntoView({ 
-                behavior: 'smooth',
-                block: 'start'
-              });
-            }, 100);
-          }
-        }
-      }
-
-      // 초기 해시 처리
-      handleInitialHash();
-
-      // 뒤로가기/앞으로가기 시 해시 처리
-      window.addEventListener('popstate', handleInitialHash);
+      // 초기 상태 설정
+      updateActiveFromScroll();
     }
 
     // DOM 로드 후 실행
@@ -126,8 +121,9 @@ const hasHeadings = headings && headings.length > 0;
   .table-of-contents {
     position: fixed;
     top: 120px; /* 플로팅 네비게이션 고려 */
-    left: calc(50vw + 400px + 3rem); /* 화면 중앙 + 콘텐츠 절반 크기 + 간격 */
-    width: 250px;
+    left: calc(50% + 432px + 1rem); /* 컨테이너 오른쪽 끝(800px/2 + 2rem) + 간격 */
+    right: 1rem;
+    max-width: 250px;
     max-height: calc(100vh - 140px);
     overflow-y: auto;
     z-index: 10;
@@ -234,22 +230,9 @@ const hasHeadings = headings && headings.length > 0;
   }
 
   /* 화면이 좁을 때 TOC 숨김 */
-  @media (max-width: 1150px) {
+  @media (max-width: 1299px) {
     .table-of-contents {
       display: none;
-    }
-  }
-
-  /* 다양한 화면 크기에서 TOC 위치 조정 */
-  @media (min-width: 1200px) {
-    .table-of-contents {
-      left: calc(50vw + 420px);
-    }
-  }
-
-  @media (min-width: 1400px) {
-    .table-of-contents {
-      left: calc(50vw + 450px);
     }
   }
 </style>

@@ -29,25 +29,17 @@ function formatDate(date: Date): string {
 	}).replace(/\. /g, '.').replace(/\.$/, '');
 }
 
-// 헤딩 텍스트를 URL-safe ID로 변환
-function slugify(text: string): string {
-	return text
-		.toLowerCase()
-		.replace(/[^a-z0-9가-힣]+/g, '-')
-		.replace(/^-+|-+$/g, '');
-}
-
-// H1-H3 헤딩만 필터링하고 ID 추가
+// H1-H3 헤딩만 필터링 (ID는 Astro가 헤딩에 붙인 slug를 그대로 사용)
 const headings = rawHeadings
 	.filter(heading => heading.depth <= 3)
 	.map(heading => ({
-		id: slugify(heading.text),
+		id: heading.slug,
 		text: heading.text,
 		level: heading.depth
 	}));
 ---
 
-<Layout title={`${post.data.title} - ${SITE.author.name}`}>
+<Layout title={`${post.data.title} - ${SITE.author.name}`} description={post.data.description}>
 	<article class="blog-post">
 		<header class="post-header">
 			<h1>{post.data.title}</h1>
@@ -83,27 +75,6 @@ const headings = rawHeadings
 		<TableOfContents headings={headings} />
 	</article>
 </Layout>
-
-<!-- 헤딩에 ID 추가하는 스크립트 -->
-<script is:inline define:vars={{ headings }}>
-	// 페이지 로드 후 헤딩에 ID 추가
-	function addHeadingIds() {
-		const contentHeadings = document.querySelectorAll('.post-content h1, .post-content h2, .post-content h3');
-		
-		headings.forEach((heading, index) => {
-			if (contentHeadings[index]) {
-				contentHeadings[index].id = heading.id;
-			}
-		});
-	}
-
-	// DOM 로드 후 실행
-	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', addHeadingIds);
-	} else {
-		addHeadingIds();
-	}
-</script>
 
 <style>
 	.blog-post {

@@ -3,7 +3,7 @@
     {
       "id": "liar-game-web",
       "title": "Liar Game Web - 온라인 라이어 게임",
-      "thumbnail": "https://github.com/Guest-01/liar-game-web/blob/main/main-page.png?raw=true",
+      "thumbnail": "/liar-game-web.png",
       "description": "온라인으로 라이어 게임을 즐길 수 있는 웹 애플리케이션입니다. 심리게임 특성상 별다른 캐릭터나 그래픽 요소가 필요 없기에 단순 실시간 통신만 가능하면 일반 웹 기술로도 충분하다고 판단하여, Express.js와 Socket.IO를 사용해 서버를 구축하고, 프론트엔드는 EJS 템플릿 + Alpine.js로 제작했습니다. 클라우드 서버에 직접 배포하여 도메인까지 연결한 프로젝트입니다.",
       "period": {
         "start": "2025.11",
